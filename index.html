@@ -668,6 +668,65 @@
   #chat::-webkit-scrollbar-thumb { background: var(--p-pink-bright); border-radius: 6px; }
   #chat::-webkit-scrollbar-thumb:hover { background: var(--p-pink); }
 
+  /* ===== READING SECTION STYLES ===== */
+  .unit-btn.u23 { border-color: var(--p-orange); color: var(--p-orange-dark); box-shadow: 0 3px 0 var(--p-orange-dark); }
+  .unit-btn.u24 { border-color: var(--p-green); color: var(--p-green-dark); box-shadow: 0 3px 0 var(--p-green-dark); }
+
+  .reading-passage {
+    background: linear-gradient(135deg, #fff8e8, #fff5d0);
+    border: 3px solid var(--p-orange);
+    border-radius: 16px;
+    padding: 18px 22px;
+    margin-top: 14px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: var(--p-text);
+    box-shadow: 0 3px 0 var(--p-orange-dark);
+  }
+  .reading-passage strong {
+    color: var(--p-pink-dark);
+    font-family: 'Baloo 2', sans-serif;
+    background: #fff5fa;
+    padding: 0 5px;
+    border-radius: 5px;
+  }
+  .reading-title {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--p-orange-dark);
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .vocab-card {
+    background: #fff;
+    border: 2.5px solid var(--p-green-bright);
+    border-radius: 12px;
+    padding: 10px 12px;
+    box-shadow: 0 3px 0 var(--p-green);
+  }
+  .vocab-card .vw-word {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--p-green-dark);
+    display: block;
+    margin-bottom: 3px;
+  }
+  .vocab-card .vw-def {
+    font-size: 0.88rem;
+    color: var(--p-text-light);
+    line-height: 1.35;
+  }
+
   @media (max-width: 600px) {
     #log-stats { grid-template-columns: repeat(2, 1fr); }
     .log-stat-num { font-size: 1.3rem; }
@@ -675,6 +734,7 @@
     header h1 { font-size: 1.05rem; }
     .quiz-word-display { font-size: 1.8rem; padding: 14px; }
     .letter-btn { font-size: 1.3rem; padding: 12px 16px; min-width: 52px; }
+    .reading-passage { font-size: 1rem; padding: 14px 16px; }
   }
 </style>
 </head>
@@ -759,6 +819,7 @@
 const state = {
   score: 0,
   currentWeek: null,
+  currentUnit: null,
   currentTopic: null,
   mode: null,
   quizIndex: 0,
@@ -1182,6 +1243,175 @@ const WEEKS = {
 };
 
 /* ================================================================
+   READING SECTION — Units 23 & 24
+   Grade-3 level passages built from vocabulary the student is
+   learning. Each unit has:
+     - vocab list (target words)
+     - a short passage (~1 paragraph)
+     - comprehension Q&A
+     - spelling quiz (fill the missing letter[s])
+     - usage quiz (pick the best word for the sentence)
+   ================================================================ */
+
+const READING_UNITS = {
+  u23: {
+    title: "Unit 23",
+    subtitle: "A Walk With Father",
+    emoji: "🏠",
+    cssClass: "u23",
+    vocab: ["house","along","together","boy","father","again","nothing","began"],
+    // Vocab definitions (kid-friendly, grade-3 level)
+    defs: {
+      "house":     "a building where people live",
+      "along":     "moving in the same direction as a path or road",
+      "together":  "with each other, in one group",
+      "boy":       "a young male child",
+      "father":    "a dad — a male parent",
+      "again":     "one more time",
+      "nothing":   "not a single thing",
+      "began":     "started"
+    },
+    // Grade-3 passage that uses every vocab word at least once.
+    passage:
+      "One bright morning, a young <strong>boy</strong> named Sam left his <strong>house</strong> with his <strong>father</strong>. " +
+      "They walked <strong>along</strong> the quiet path that led to the woods. They strolled <strong>together</strong>, " +
+      "talking about birds and clouds. At first, they saw <strong>nothing</strong> at all — just empty trees and stones. " +
+      "Then a small rabbit hopped out, looked at them, and hopped <strong>again</strong> into the bushes. " +
+      "Sam smiled and <strong>began</strong> to laugh. He could not wait to come back to the woods another day.",
+    // Plain version (no tags) — used for export and read-aloud lookups
+    passagePlain:
+      "One bright morning, a young boy named Sam left his house with his father. " +
+      "They walked along the quiet path that led to the woods. They strolled together, " +
+      "talking about birds and clouds. At first, they saw nothing at all — just empty trees and stones. " +
+      "Then a small rabbit hopped out, looked at them, and hopped again into the bushes. " +
+      "Sam smiled and began to laugh. He could not wait to come back to the woods another day.",
+    // Comprehension questions
+    comprehension: [
+      {
+        q: "Who did Sam walk with?",
+        choices: ["his mother","his father","his sister","his friend"],
+        correct: "his father",
+        explain: "Sam walked with his <strong>father</strong>."
+      },
+      {
+        q: "Where did they walk to?",
+        choices: ["the school","the store","the woods","the beach"],
+        correct: "the woods",
+        explain: "The path led to the <strong>woods</strong>."
+      },
+      {
+        q: "What did they see at first?",
+        choices: ["a deer","a rabbit","nothing","a bird"],
+        correct: "nothing",
+        explain: "At first they saw <strong>nothing</strong> at all."
+      },
+      {
+        q: "How did Sam feel at the end of the walk?",
+        choices: ["sad","scared","happy","tired"],
+        correct: "happy",
+        explain: "Sam smiled and began to laugh — he was <strong>happy</strong>."
+      }
+    ],
+    // Spelling quiz: fill the missing letter(s)
+    spelling: [
+      { word: "house",    blanks: [2,3], hint: "🏠 A building where people live" },
+      { word: "along",    blanks: [1,2], hint: "↗️ Moving in the same direction as a path" },
+      { word: "together", blanks: [2,3], hint: "🤝 With each other, in one group" },
+      { word: "boy",      blanks: [1,2], hint: "👦 A young male child" },
+      { word: "father",   blanks: [2,3], hint: "👨 A dad" },
+      { word: "again",    blanks: [1,2], hint: "🔁 One more time" },
+      { word: "nothing",  blanks: [2,3], hint: "🚫 Not a single thing" },
+      { word: "began",    blanks: [2,3], hint: "▶️ Started" }
+    ],
+    // Usage quiz: pick the right word for the sentence
+    usage: [
+      { sentence: "Sam left his ___ to walk to the woods.", correct: "house", choices: ["house","again","nothing"] },
+      { sentence: "He walked ___ the path with his dad.",     correct: "along", choices: ["along","began","boy"] },
+      { sentence: "They sang songs ___ on the way home.",     correct: "together", choices: ["nothing","together","father"] },
+      { sentence: "The little ___ smiled at the rabbit.",     correct: "boy", choices: ["father","boy","again"] },
+      { sentence: "His ___ held his hand at the bridge.",     correct: "father", choices: ["father","house","along"] },
+      { sentence: "They went to the woods ___ on Sunday.",    correct: "again", choices: ["nothing","began","again"] },
+      { sentence: "There was ___ in the empty box.",          correct: "nothing", choices: ["together","nothing","along"] },
+      { sentence: "Sam ___ to laugh when he saw the rabbit.", correct: "began", choices: ["began","father","house"] }
+    ]
+  },
+
+  u24: {
+    title: "Unit 24",
+    subtitle: "All Kinds of Earth",
+    emoji: "🌍",
+    cssClass: "u24",
+    vocab: ["kinds","earth","country","almost","warms","ready","soil","covers"],
+    defs: {
+      "kinds":   "different types of something",
+      "earth":   "the planet we live on; also the ground",
+      "country": "a large area of land that is its own nation",
+      "almost":  "very close to, but not all the way",
+      "warms":   "makes something a little hotter",
+      "ready":   "all set to go",
+      "soil":    "the dirt where plants grow",
+      "covers":  "spreads over the top of something"
+    },
+    passage:
+      "There are many <strong>kinds</strong> of land on <strong>Earth</strong>. Some land is flat, and some is full of tall hills. " +
+      "Each <strong>country</strong> looks a little different. In spring, the warm sun <strong>warms</strong> the ground until it is <strong>almost</strong> ready for new plants. " +
+      "Soon the <strong>soil</strong> is <strong>ready</strong> for seeds. Green grass <strong>covers</strong> the fields, and farmers plant their crops. " +
+      "Earth gives us food, water, and a beautiful place to live.",
+    passagePlain:
+      "There are many kinds of land on Earth. Some land is flat, and some is full of tall hills. " +
+      "Each country looks a little different. In spring, the warm sun warms the ground until it is almost ready for new plants. " +
+      "Soon the soil is ready for seeds. Green grass covers the fields, and farmers plant their crops. " +
+      "Earth gives us food, water, and a beautiful place to live.",
+    comprehension: [
+      {
+        q: "What does the sun do in spring?",
+        choices: ["cools the ground","warms the ground","hides from the sky","makes it snow"],
+        correct: "warms the ground",
+        explain: "In spring, the sun <strong>warms</strong> the ground."
+      },
+      {
+        q: "What is needed before farmers can plant seeds?",
+        choices: ["the soil must be ready","it must be winter","the grass must die","the wind must stop"],
+        correct: "the soil must be ready",
+        explain: "The <strong>soil</strong> must be <strong>ready</strong> for seeds."
+      },
+      {
+        q: "What covers the fields in spring?",
+        choices: ["snow","sand","green grass","rocks"],
+        correct: "green grass",
+        explain: "<strong>Green grass</strong> covers the fields."
+      },
+      {
+        q: "What does Earth give us?",
+        choices: ["only rocks","food, water, and a place to live","only money","ice cream"],
+        correct: "food, water, and a place to live",
+        explain: "Earth gives us food, water, and a place to live."
+      }
+    ],
+    spelling: [
+      { word: "kinds",   blanks: [1,2], hint: "🧩 Different types of something" },
+      { word: "earth",   blanks: [1,2], hint: "🌍 The planet we live on" },
+      { word: "country", blanks: [2,3], hint: "🗺 A large land that is its own nation" },
+      { word: "almost",  blanks: [1,2], hint: "📏 Very close to, but not quite" },
+      { word: "warms",   blanks: [1,2], hint: "🔥 Makes something a little hotter" },
+      { word: "ready",   blanks: [1,2], hint: "✅ All set to go" },
+      { word: "soil",    blanks: [1,2], hint: "🌱 The dirt where plants grow" },
+      { word: "covers",  blanks: [2,3], hint: "🛏 Spreads over the top of something" }
+    ],
+    usage: [
+      { sentence: "There are many ___ of trees in the forest.",      correct: "kinds", choices: ["kinds","ready","soil"] },
+      { sentence: "We live on the planet ___.",                       correct: "earth", choices: ["covers","earth","almost"] },
+      { sentence: "Canada is a big ___ in North America.",            correct: "country", choices: ["country","warms","ready"] },
+      { sentence: "I ___ finished my homework — just one more page!", correct: "almost", choices: ["covers","almost","soil"] },
+      { sentence: "The bright sun ___ the sand at the beach.",        correct: "warms", choices: ["kinds","warms","earth"] },
+      { sentence: "Are you ___ to go to school?",                     correct: "ready", choices: ["ready","almost","country"] },
+      { sentence: "Plants need water and good ___ to grow.",          correct: "soil", choices: ["covers","soil","kinds"] },
+      { sentence: "A blanket of snow ___ the ground in winter.",      correct: "covers", choices: ["covers","ready","warms"] }
+    ]
+  }
+};
+
+/* ================================================================
    DOM helpers
    ================================================================ */
 
@@ -1271,11 +1501,13 @@ function showWelcome() {
   state.mode = 'welcome';
   unitBadge.style.display = 'none';
   botSay(
-    "Hi friend! 🦉 I'm <strong>Buddy the Owl</strong>, your phonics helper! 🌟<br><br>" +
-    "Let's read and play with words together! Each <strong>week</strong> teaches us new sounds. " +
-    "Pick a week to start. You'll learn the words, then take a fun quiz to earn ⭐ stars!",
+    "Hi friend! 🦉 I'm <strong>Buddy the Owl</strong>, your reading and phonics helper! 🌟<br><br>" +
+    "What would you like to do today?<br>" +
+    "📚 <strong>Phonics weeks</strong> — learn new sounds and play fun quizzes.<br>" +
+    "📖 <strong>Reading units</strong> — read a story, learn new words, and try spelling and usage quizzes!",
     [
-      { label: "📚 Pick a week", onClick: () => { userSay("Pick a week"); showWeekMenu(); } }
+      { label: "📚 Phonics (Weeks 25–32)", onClick: () => { userSay("Phonics weeks"); showWeekMenu(); } },
+      { label: "📖 Reading (Units 23–24)", onClick: () => { userSay("Reading units"); showReadingMenu(); } }
     ]
   );
 }
@@ -1293,7 +1525,9 @@ function showWeekMenu() {
       `</button>`;
   });
   html += "</div>";
-  botSay(html);
+  botSay(html, [
+    { label: "📖 Switch to Reading Units", onClick: () => { userSay("Reading units"); showReadingMenu(); } }
+  ]);
 }
 
 window.pickWeek = function(key) {
@@ -1534,6 +1768,339 @@ function finishQuiz() {
 }
 
 /* ================================================================
+   READING SECTION FLOW
+   ================================================================ */
+
+function showReadingMenu() {
+  state.mode = 'reading_menu';
+  state.currentUnit = null;
+  state.currentWeek = null;
+  unitBadge.style.display = 'none';
+  let html = "<strong>📖 Reading Units</strong><br>" +
+             "Pick a unit to read a story, learn new words, and play vocabulary quizzes!" +
+             "<div class='unit-grid'>";
+  Object.entries(READING_UNITS).forEach(([key, u]) => {
+    html += `<button class='unit-btn ${u.cssClass}' onclick='pickReadingUnit("${key}")'>` +
+      `<span class='unit-emoji'>${u.emoji}</span>` +
+      `<span class='unit-title'>${u.title}</span>` +
+      `<span class='unit-sub'>${u.subtitle}</span>` +
+      `</button>`;
+  });
+  html += "</div>";
+  botSay(html, [
+    { label: "📚 Switch to Phonics Weeks", onClick: () => { userSay("Phonics weeks"); showWeekMenu(); } }
+  ]);
+}
+
+window.pickReadingUnit = function(key) {
+  state.currentUnit = key;
+  const u = READING_UNITS[key];
+  userSay(`Let's read ${u.title}!`);
+  unitBadge.textContent = `${u.emoji} ${u.title}`;
+  unitBadge.style.display = 'inline-block';
+  showReadingTopicMenu();
+};
+
+function showReadingTopicMenu() {
+  state.mode = 'reading_topic_menu';
+  const u = READING_UNITS[state.currentUnit];
+  let html = `<strong>${u.emoji} ${u.title}: ${u.subtitle}</strong><br>What would you like to do?`;
+  botSay(html, [
+    { label: "📖 Read the story", onClick: () => { userSay("Read the story"); showReadingPassage(); } },
+    { label: "📚 Vocabulary words", onClick: () => { userSay("Vocabulary words"); showVocabulary(); } },
+    { label: "❓ Reading questions", onClick: () => { userSay("Reading questions"); startReadingQuiz('comprehension'); } },
+    { label: "✏️ Spelling quiz", onClick: () => { userSay("Spelling quiz"); startReadingQuiz('spelling'); } },
+    { label: "📝 Word usage quiz", onClick: () => { userSay("Word usage quiz"); startReadingQuiz('usage'); } },
+    { label: "🔄 Pick another unit", onClick: () => { userSay("Pick another unit"); showReadingMenu(); } }
+  ]);
+}
+
+function showReadingPassage() {
+  state.mode = 'reading_passage';
+  const u = READING_UNITS[state.currentUnit];
+  let html = `<strong>${u.emoji} ${u.title}: ${u.subtitle}</strong>`;
+  html += `<div class='reading-passage'>`;
+  html += `<div class='reading-title'>${u.subtitle}</div>`;
+  html += `<p>${u.passage}</p>`;
+  html += `</div>`;
+  html += `<br><em>📌 The <strong>colored words</strong> are your new vocabulary words. Read the story slowly and try to figure out what each word means!</em><br><br>`;
+  html += `⭐ <em>+1 star for reading so well!</em>`;
+  botSay(html);
+  addStars(1);
+
+  setTimeout(() => {
+    botSay("Nice reading! What's next? 🎉", [
+      { label: "📚 See vocabulary words", onClick: () => { userSay("See vocabulary"); showVocabulary(); } },
+      { label: "❓ Reading questions", onClick: () => { userSay("Reading questions"); startReadingQuiz('comprehension'); } },
+      { label: "✏️ Spelling quiz", onClick: () => { userSay("Spelling quiz"); startReadingQuiz('spelling'); } },
+      { label: "📝 Word usage quiz", onClick: () => { userSay("Word usage quiz"); startReadingQuiz('usage'); } },
+      { label: "🔄 Pick another unit", onClick: () => { userSay("Pick another unit"); showReadingMenu(); } }
+    ]);
+  }, 400);
+}
+
+function showVocabulary() {
+  state.mode = 'reading_vocab';
+  const u = READING_UNITS[state.currentUnit];
+  let html = `<strong>📚 ${u.title} — Vocabulary Words</strong><br>`;
+  html += `Here are the new words to learn this unit:`;
+  html += `<div class='vocab-grid'>`;
+  u.vocab.forEach(word => {
+    html += `<div class='vocab-card'>` +
+      `<span class='vw-word'>${word}</span>` +
+      `<span class='vw-def'>${u.defs[word]}</span>` +
+      `</div>`;
+  });
+  html += `</div>`;
+  html += `<br>⭐ <em>+1 star for studying these words!</em>`;
+  botSay(html);
+  addStars(1);
+
+  setTimeout(() => {
+    botSay("Ready to test what you learned? 🌟", [
+      { label: "✏️ Spelling quiz", onClick: () => { userSay("Spelling quiz"); startReadingQuiz('spelling'); } },
+      { label: "📝 Word usage quiz", onClick: () => { userSay("Word usage quiz"); startReadingQuiz('usage'); } },
+      { label: "❓ Reading questions", onClick: () => { userSay("Reading questions"); startReadingQuiz('comprehension'); } },
+      { label: "📖 Re-read the story", onClick: () => { userSay("Re-read story"); showReadingPassage(); } },
+      { label: "🔄 Pick another unit", onClick: () => { userSay("Pick another unit"); showReadingMenu(); } }
+    ]);
+  }, 400);
+}
+
+/* ----- Reading quiz builders ----- */
+
+/* --- Misspelling generators for "pick the correct spelling" questions --- */
+function generateMisspellings(word) {
+  const vowels = ['a','e','i','o','u'];
+  const candidates = new Set();
+
+  // 1. Swap a vowel for another vowel
+  for (let i = 0; i < word.length; i++) {
+    if (vowels.includes(word[i])) {
+      for (const v of vowels) {
+        if (v !== word[i]) candidates.add(word.slice(0, i) + v + word.slice(i + 1));
+      }
+    }
+  }
+  // 2. Drop a single letter (not the first)
+  for (let i = 1; i < word.length; i++) {
+    candidates.add(word.slice(0, i) + word.slice(i + 1));
+  }
+  // 3. Double a consonant (or un-double doubled letters)
+  for (let i = 1; i < word.length - 1; i++) {
+    const c = word[i];
+    if (!vowels.includes(c) && word[i - 1] !== c && word[i + 1] !== c) {
+      candidates.add(word.slice(0, i) + c + word.slice(i));
+    }
+    if (word[i] === word[i - 1]) {
+      candidates.add(word.slice(0, i) + word.slice(i + 1));
+    }
+  }
+  // 4. Swap two adjacent letters
+  for (let i = 0; i < word.length - 1; i++) {
+    if (word[i] !== word[i + 1]) {
+      candidates.add(word.slice(0, i) + word[i + 1] + word[i] + word.slice(i + 2));
+    }
+  }
+  // 5. Word-specific phonetic confusions for our target vocab
+  const phonetic = {
+    "house":    ["howse","hous","huose","hause"],
+    "along":    ["alung","alon","allong","aloung"],
+    "together": ["togethr","togather","togeather","togeter"],
+    "boy":      ["boi","bouy","boye","bui"],
+    "father":   ["fadher","fothar","feather","fater"],
+    "again":    ["agen","agian","agane","agin"],
+    "nothing":  ["nuthing","nothig","nothink","noting"],
+    "began":    ["bagan","beggin","beggan","began"].filter(x=>x!=="began").concat(["bagun","bigan"]),
+    "kinds":    ["kindz","kinds".replace('i','y'),"kindes","kins"],
+    "earth":    ["erth","earht","earthe","urth"],
+    "country":  ["contry","cuntry","countree","contery"],
+    "almost":   ["allmost","almoste","almoast","almst"],
+    "warms":    ["wormz","warmes","wamrs","warmms"],
+    "ready":    ["redy","raedy","reddy","reaty"],
+    "soil":     ["sol","siol","soyl","soill"],
+    "covers":   ["cuvers","coverz","covrs","kovers"]
+  };
+  if (phonetic[word]) phonetic[word].forEach(x => candidates.add(x));
+
+  // Filter out the correct word
+  candidates.delete(word);
+  return Array.from(candidates);
+}
+
+function buildSpellingQuestions(unitKey) {
+  const u = READING_UNITS[unitKey];
+  // For each vocab item, randomly pick one of two question styles.
+  return shuffle(u.spelling).map(item => {
+    const word = item.word;
+    const useMissingLetter = Math.random() < 0.5;
+
+    if (useMissingLetter) {
+      // ----- Style 1: Fill the missing letter(s) -----
+      const blanks = item.blanks;
+      const display = word.split('').map((c, i) => blanks.includes(i) ? `<span class='blank'>_</span>` : c).join(' ');
+      const correctLetters = blanks.map(i => word[i]).join('');
+
+      const distractorPool = [];
+      if (correctLetters.length === 1) {
+        distractorPool.push(...['a','e','i','o','u','b','c','d','f','g','h','k','l','m','n','p','r','s','t','w','y']);
+      } else if (correctLetters.length === 2) {
+        distractorPool.push(...['ou','ho','ng','lo','to','ge','th','er','bo','oy','fa','ai','in','ag','no','th','be','ki','nd','ea','rt','co','un','tr','al','mo','st','wa','rm','re','ad','so','il','ve','rs','an','en']);
+      } else {
+        distractorPool.push(...['ouse','long','ther','ing','her','gain','hing','egan','arth','untry','arms','eady']);
+      }
+      const distractors = shuffle(distractorPool.filter(x => x !== correctLetters)).slice(0, 3);
+      const options = shuffle([correctLetters, ...distractors]);
+      const answer = options.indexOf(correctLetters);
+
+      return {
+        type: 'SPELL',
+        q: `<strong>Spell the word!</strong> Pick the missing letter${blanks.length > 1 ? 's' : ''}:` +
+           `<div class='quiz-word-display'>${display}<span class='hint'>${item.hint}</span></div>`,
+        options,
+        answer,
+        explain: `The word is <strong>${word}</strong>. The missing letter${blanks.length > 1 ? 's are' : ' is'} <strong>${correctLetters}</strong>.`,
+        word
+      };
+    } else {
+      // ----- Style 2: Pick the correctly-spelled word -----
+      const misspellings = shuffle(generateMisspellings(word)).slice(0, 3);
+      // Make sure we always have exactly 3 distractors; pad if needed.
+      while (misspellings.length < 3) {
+        // Fallback: random vowel swap
+        const v = ['a','e','i','o','u'];
+        const idx = Math.floor(Math.random() * word.length);
+        const swap = word.slice(0, idx) + v[Math.floor(Math.random()*5)] + word.slice(idx + 1);
+        if (swap !== word && !misspellings.includes(swap)) misspellings.push(swap);
+        else misspellings.push(word + 'e');
+      }
+      const options = shuffle([word, ...misspellings]);
+      const answer = options.indexOf(word);
+      return {
+        type: 'SPELL_PICK',
+        q: `<strong>Pick the correct spelling!</strong>` +
+           `<div class='quiz-sentence' style='text-align:center;font-size:1.1rem;'>${item.hint}</div>` +
+           `Which one is spelled right?`,
+        options,
+        answer,
+        explain: `Yes! The correct spelling is <strong>${word}</strong>.`,
+        word
+      };
+    }
+  });
+}
+
+function buildUsageQuestions(unitKey) {
+  const u = READING_UNITS[unitKey];
+  return shuffle(u.usage).map(item => {
+    const sent = item.sentence.replace('___', `<span class='blank'>____</span>`);
+    const options = shuffle(item.choices);
+    const answer = options.indexOf(item.correct);
+    const filled = item.sentence.replace('___', `<strong>${item.correct}</strong>`);
+    return {
+      type: 'USAGE',
+      q: `<strong>Pick the best word for the sentence:</strong>` +
+         `<div class='quiz-sentence'>${sent}</div>`,
+      options,
+      answer,
+      explain: `Yes! The sentence is: <em>"${filled}"</em>`,
+      word: item.correct
+    };
+  });
+}
+
+function buildComprehensionQuestions(unitKey) {
+  const u = READING_UNITS[unitKey];
+  return shuffle(u.comprehension).map(item => {
+    const options = shuffle(item.choices);
+    const answer = options.indexOf(item.correct);
+    return {
+      type: 'COMP',
+      q: `<strong>${item.q}</strong>`,
+      options,
+      answer,
+      explain: item.explain,
+      word: item.correct
+    };
+  });
+}
+
+function startReadingQuiz(kind) {
+  state.mode = 'reading_quiz';
+  state.quizType = kind;
+  state.quizIndex = 0;
+  state.quizCorrect = 0;
+  if (kind === 'spelling')          state.quizQuestions = buildSpellingQuestions(state.currentUnit);
+  else if (kind === 'usage')        state.quizQuestions = buildUsageQuestions(state.currentUnit);
+  else /* comprehension */          state.quizQuestions = buildComprehensionQuestions(state.currentUnit);
+
+  const u = READING_UNITS[state.currentUnit];
+  const partName = kind === 'spelling' ? 'Spelling Quiz' :
+                   kind === 'usage'    ? 'Word Usage Quiz' :
+                                         'Reading Comprehension';
+  botSay(
+    `<strong>🎯 ${partName} — ${u.title}</strong><br>` +
+    `<em>${state.quizQuestions.length} questions. Earn 1 ⭐ for each right answer!</em>`
+  );
+  setTimeout(askReadingQuestion, 500);
+}
+
+function askReadingQuestion() {
+  const item = state.quizQuestions[state.quizIndex];
+  let html = `<strong>Question ${state.quizIndex + 1} of ${state.quizQuestions.length}</strong><br><br>${item.q}`;
+  const opts = item.options.map((opt, idx) => ({
+    label: opt,
+    cls: (item.type === 'SPELL' && opt.length <= 4) ? 'option-btn letter-btn' : 'option-btn',
+    onClick: (btn) => handleReadingAnswer(idx, btn)
+  }));
+  botSay(html, opts);
+}
+
+function handleReadingAnswer(chosen, btn) {
+  const item = state.quizQuestions[state.quizIndex];
+  const allBtns = btn.parentElement.querySelectorAll('button');
+  allBtns.forEach(b => b.disabled = true);
+  userSay(item.options[chosen]);
+  const isCorrect = chosen === item.answer;
+  if (isCorrect) {
+    btn.classList.add('correct');
+    state.quizCorrect++;
+    addStars(1);
+    botSay(`<div class='feedback-correct'>🎉 <strong>Yes!</strong> ${item.explain}<br><em>+1 ⭐ star!</em></div>`);
+  } else {
+    btn.classList.add('wrong');
+    allBtns[item.answer].classList.add('correct');
+    botSay(`<div class='feedback-wrong'>💡 <strong>The answer was "${item.options[item.answer]}".</strong><br>${item.explain}<br><em>You'll get the next one!</em></div>`);
+  }
+  logAnswer(isCorrect, item.q, item.options[chosen], item.options[item.answer], item.explain);
+  state.quizIndex++;
+  setTimeout(() => {
+    if (state.quizIndex < state.quizQuestions.length) askReadingQuestion();
+    else finishReadingQuiz();
+  }, 900);
+}
+
+function finishReadingQuiz() {
+  const total = state.quizQuestions.length;
+  const got = state.quizCorrect;
+  const bonus = (got === total) ? 3 : (got >= total - 1) ? 2 : (got >= total / 2) ? 1 : 0;
+  let msg;
+  if (got === total) msg = `🌟🌟🌟 <strong>AMAZING!</strong> You got ALL ${total} right! <em>You're a reading superstar!</em> Bonus +${bonus} ⭐!`;
+  else if (got >= total - 1) msg = `🎉 <strong>Wonderful!</strong> You got ${got} out of ${total}! Bonus +${bonus} ⭐!`;
+  else if (got >= total / 2) msg = `⭐ <strong>Nice work!</strong> ${got} of ${total} correct. Bonus +${bonus} ⭐. <em>Try again to earn more!</em>`;
+  else msg = `You got ${got} of ${total}. <em>Let's read the story again — practice makes perfect!</em>`;
+  if (bonus) addStars(bonus);
+  botSay(msg, [
+    { label: "🔁 Try the same quiz", onClick: () => { userSay("Try again"); startReadingQuiz(state.quizType); } },
+    { label: "✏️ Spelling quiz", onClick: () => { userSay("Spelling quiz"); startReadingQuiz('spelling'); } },
+    { label: "📝 Word usage quiz", onClick: () => { userSay("Word usage quiz"); startReadingQuiz('usage'); } },
+    { label: "❓ Reading questions", onClick: () => { userSay("Reading questions"); startReadingQuiz('comprehension'); } },
+    { label: "📖 Re-read the story", onClick: () => { userSay("Re-read the story"); showReadingPassage(); } },
+    { label: "🔄 Pick another unit", onClick: () => { userSay("Pick another unit"); showReadingMenu(); } }
+  ]);
+}
+
+/* ================================================================
    LOG OVERLAY
    ================================================================ */
 
@@ -1588,13 +2155,22 @@ const printOverlay = document.getElementById('print-overlay');
 const printList = document.getElementById('print-list');
 
 function openPrint() {
-  let html = '';
+  let html = '<h3 style="margin:6px 0 10px 0;color:#d8407a;font-family:\'Baloo 2\',sans-serif;">📚 Phonics Weeks</h3>';
   Object.entries(WEEKS).forEach(([key, w]) => {
     html += `<div class='print-week-row'>` +
       `<div class='pw-info'><div class='pw-title'>${w.emoji} ${w.title}: ${w.subtitle}</div>` +
       `<div class='pw-sub'>${w.spelling.length} spelling words • ${Object.keys(w.families).length} sound families • 3 quiz parts</div></div>` +
       `<div class='pw-actions'>` +
       `<button class='print-action-btn full' onclick='openPrintWeek("${key}")'>Open print page</button>` +
+      `</div></div>`;
+  });
+  html += '<h3 style="margin:18px 0 10px 0;color:#d8702a;font-family:\'Baloo 2\',sans-serif;">📖 Reading Units</h3>';
+  Object.entries(READING_UNITS).forEach(([key, u]) => {
+    html += `<div class='print-week-row' style='border-left-color:#ff9f5a'>` +
+      `<div class='pw-info'><div class='pw-title'>${u.emoji} ${u.title}: ${u.subtitle}</div>` +
+      `<div class='pw-sub'>${u.vocab.length} vocabulary words • passage • spelling, usage & comprehension quizzes</div></div>` +
+      `<div class='pw-actions'>` +
+      `<button class='print-action-btn full' onclick='openPrintUnit("${key}")'>Open print page</button>` +
       `</div></div>`;
   });
   printList.innerHTML = html;
@@ -1679,6 +2255,76 @@ window.openPrintWeek = function(key) {
   win.document.close();
 };
 
+window.openPrintUnit = function(key) {
+  const u = READING_UNITS[key];
+  let body = `<!DOCTYPE html><html><head><meta charset='utf-8'><title>${u.title} — Reading</title>`;
+  body += `<style>
+    body { font-family: 'Comic Sans MS', sans-serif; padding: 30px 40px; color: #2a2030; max-width: 800px; margin: 0 auto; }
+    h1 { color: #d8702a; border-bottom: 3px dashed #ffbb88; padding-bottom: 8px; font-size: 1.6rem; }
+    h2 { color: #2a8cc0; margin-top: 24px; border-left: 6px solid #88d6f6; padding-left: 10px; font-size: 1.25rem; }
+    h3 { color: #d8407a; font-size: 1.05rem; margin-top: 14px; }
+    .passage { background: #fff8e8; border: 2px solid #ffd84a; border-radius: 8px; padding: 14px 18px; line-height: 1.7; font-size: 1.05rem; }
+    .passage strong { color: #d8407a; background: #fff5fa; padding: 0 4px; border-radius: 4px; }
+    .vocab-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+    .vocab-list span { background: #fff; border: 1.5px solid #a8e09a; border-radius: 6px; padding: 4px 10px; font-weight: 700; color: #4a9f3a; }
+    table.def-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    table.def-table th, table.def-table td { border: 1.5px solid #ddd; padding: 7px 10px; text-align: left; font-size: 0.95rem; }
+    table.def-table th { background: #fff5d8; color: #d8702a; }
+    ol { padding-left: 22px; }
+    ol li { margin-bottom: 8px; line-height: 1.6; }
+    .blank-line { display: inline-block; min-width: 100px; border-bottom: 1.5px solid #888; }
+    .answers { background: #f0fbe8; border: 1.5px dashed #4a9f3a; border-radius: 8px; padding: 12px 16px; margin-top: 16px; }
+    .answers h2 { color: #4a9f3a; border-color: #a8e09a; margin-top: 0; }
+    .footer { margin-top: 30px; text-align: center; color: #888; font-size: 0.85rem; }
+    @media print { body { padding: 16px; } .no-print { display: none; } }
+    .print-btn { display: inline-block; background: #5ac0ee; color: white; padding: 10px 20px; border: none; border-radius: 8px; font-family: inherit; font-size: 1rem; cursor: pointer; margin: 16px 0; }
+  </style></head><body>`;
+  body += `<button class='print-btn no-print' onclick='window.print()'>🖨 Print this page</button>`;
+  body += `<h1>${u.emoji} ${u.title}: ${u.subtitle}</h1>`;
+
+  body += `<h2>Vocabulary Words</h2><div class='vocab-list'>${u.vocab.map(x => `<span>${x}</span>`).join('')}</div>`;
+  body += `<table class='def-table'><tr><th>Word</th><th>Meaning</th></tr>`;
+  u.vocab.forEach(w => body += `<tr><td><strong>${w}</strong></td><td>${u.defs[w]}</td></tr>`);
+  body += `</table>`;
+
+  body += `<h2>Reading Passage</h2><div class='passage'>${u.passage}</div>`;
+
+  body += `<h2>Reading Comprehension</h2><ol>`;
+  u.comprehension.forEach(item => {
+    body += `<li>${item.q}<br><em>(${item.choices.join(' / ')})</em></li>`;
+  });
+  body += `</ol>`;
+
+  body += `<h2>Spelling — Write the missing letter${''}</h2><ol>`;
+  u.spelling.forEach(item => {
+    const display = item.word.split('').map((c, i) => item.blanks.includes(i) ? '___' : c).join(' ');
+    body += `<li><strong style='font-size:1.2rem'>${display}</strong> &nbsp;&nbsp; <span style='color:#888'>(${item.hint})</span></li>`;
+  });
+  body += `</ol>`;
+
+  body += `<h2>Word Usage — Choose the best word</h2><ol>`;
+  u.usage.forEach(item => {
+    body += `<li>${item.sentence.replace('___', '<span class="blank-line"></span>')} &nbsp;&nbsp; <em>(${item.choices.join(' / ')})</em></li>`;
+  });
+  body += `</ol>`;
+
+  body += `<div class='answers'><h2>Answer Key</h2>`;
+  body += `<h3>Reading Comprehension</h3><ol>`;
+  u.comprehension.forEach(item => body += `<li>${item.correct}</li>`);
+  body += `</ol><h3>Spelling</h3><ol>`;
+  u.spelling.forEach(item => body += `<li>${item.word} (${item.blanks.map(i => item.word[i]).join('')})</li>`);
+  body += `</ol><h3>Word Usage</h3><ol>`;
+  u.usage.forEach(item => body += `<li>${item.correct}</li>`);
+  body += `</ol></div>`;
+
+  body += `<div class='footer'>Phonics Buddy — ${u.title} Reading • Generated ${new Date().toLocaleDateString()}</div>`;
+  body += `</body></html>`;
+
+  const win = window.open('', '_blank');
+  win.document.write(body);
+  win.document.close();
+};
+
 /* ================================================================
    INPUT HANDLING
    ================================================================ */
@@ -1690,13 +2336,18 @@ function handleSend() {
   userInput.value = '';
   // Friendly fallback — encourage button use
   setTimeout(() => {
-    botSay("Tap one of the buttons to keep going! 🌟", [
-      { label: "📚 Pick a week", onClick: () => { userSay("Pick a week"); showWeekMenu(); } },
-      { label: state.currentWeek ? "📖 Re-read words" : "Start over", onClick: () => {
-        if (state.currentWeek) { userSay("Re-read words"); showLesson(); }
-        else { userSay("Start over"); showWelcome(); }
-      } }
-    ]);
+    const opts = [
+      { label: "📚 Phonics weeks", onClick: () => { userSay("Phonics weeks"); showWeekMenu(); } },
+      { label: "📖 Reading units", onClick: () => { userSay("Reading units"); showReadingMenu(); } }
+    ];
+    if (state.currentWeek) {
+      opts.push({ label: "📖 Re-read this week's words", onClick: () => { userSay("Re-read words"); showLesson(); } });
+    }
+    if (state.currentUnit) {
+      opts.push({ label: "📖 Re-read this story", onClick: () => { userSay("Re-read story"); showReadingPassage(); } });
+    }
+    opts.push({ label: "🏠 Start over", onClick: () => { userSay("Start over"); showWelcome(); } });
+    botSay("Tap one of the buttons to keep going! 🌟", opts);
   }, 250);
 }
 
