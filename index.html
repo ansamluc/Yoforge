@@ -2139,9 +2139,17 @@ document.getElementById('log-clear').onclick = () => {
 };
 document.getElementById('log-export').onclick = () => {
   // Export to xlsx
-  const rows = [['Time', 'Kind', 'Message']];
-  state.log.forEach(e => rows.push([e.time, e.kind, e.text]));
+  const kindLabel = { bot: 'Buddy', user: 'You', correct: 'Correct', wrong: 'Wrong', system: 'System' };
+  const rows = [['Time', 'Type', 'Message']];
+  state.log.forEach(e => {
+    const label = kindLabel[e.kind] || e.kind;
+    // Strip leading emoji (✅ / ❌) from answer log entries for cleaner cells
+    const msg = e.text.replace(/^[✅❌]\s*/, '');
+    rows.push([e.time, label, msg]);
+  });
   const ws = XLSX.utils.aoa_to_sheet(rows);
+  // Set column widths: Time=10, Type=10, Message=60
+  ws['!cols'] = [{ wch: 10 }, { wch: 10 }, { wch: 60 }];
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Phonics Log');
   XLSX.writeFile(wb, `phonics-log-${new Date().toISOString().slice(0,10)}.xlsx`);
