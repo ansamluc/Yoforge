@@ -2138,17 +2138,26 @@ document.getElementById('log-clear').onclick = () => {
   }
 };
 document.getElementById('log-export').onclick = () => {
-  // Export to xlsx
+  // Remove emoji and any characters outside the XML 1.0 safe range,
+  // which cause "XML parsing error" when Excel opens the file.
+  function xlSafe(s) {
+    return String(s)
+      // strip emoji & symbols (Unicode blocks U+1F000 and above)
+      .replace(/[\u{1F000}-\u{1FFFF}]/gu, '')
+      // strip other common emoji / symbol ranges
+      .replace(/[☀-➿]/g, '')
+      // strip XML 1.0 illegal control chars (keep tab \x09, LF \x0A, CR \x0D)
+      .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '')
+      .trim();
+  }
   const kindLabel = { bot: 'Buddy', user: 'You', correct: 'Correct', wrong: 'Wrong', system: 'System' };
   const rows = [['Time', 'Type', 'Message']];
   state.log.forEach(e => {
-    const label = kindLabel[e.kind] || e.kind;
-    // Strip leading emoji (✅ / ❌) from answer log entries for cleaner cells
-    const msg = e.text.replace(/^[✅❌]\s*/, '');
-    rows.push([e.time, label, msg]);
+    const label = xlSafe(kindLabel[e.kind] || e.kind);
+    const msg = xlSafe(e.text);
+    rows.push([xlSafe(e.time), label, msg]);
   });
   const ws = XLSX.utils.aoa_to_sheet(rows);
-  // Set column widths: Time=10, Type=10, Message=60
   ws['!cols'] = [{ wch: 10 }, { wch: 10 }, { wch: 60 }];
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Phonics Log');
