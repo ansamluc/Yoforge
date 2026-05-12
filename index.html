@@ -671,6 +671,7 @@
   /* ===== READING SECTION STYLES ===== */
   .unit-btn.u23 { border-color: var(--p-orange); color: var(--p-orange-dark); box-shadow: 0 3px 0 var(--p-orange-dark); }
   .unit-btn.u24 { border-color: var(--p-green); color: var(--p-green-dark); box-shadow: 0 3px 0 var(--p-green-dark); }
+  .unit-btn.u25 { border-color: var(--p-purple); color: var(--p-purple-dark); box-shadow: 0 3px 0 var(--p-purple-dark); }
 
   .reading-passage {
     background: linear-gradient(135deg, #fff8e8, #fff5d0);
@@ -1408,6 +1409,80 @@ const READING_UNITS = {
       { sentence: "Plants need water and good ___ to grow.",          correct: "soil", choices: ["covers","soil","kinds"] },
       { sentence: "A blanket of snow ___ the ground in winter.",      correct: "covers", choices: ["covers","ready","warms"] }
     ]
+  },
+
+  u25: {
+    title: "Unit 25",
+    subtitle: "A Party in the City",
+    emoji: "🎉",
+    cssClass: "u25",
+    vocab: ["city","school","seven","please","myself","party","buy","family"],
+    defs: {
+      "city":   "a large, busy place where many people live and work",
+      "school": "a place where children go to learn",
+      "seven":  "the number 7",
+      "please": "a polite word used when asking for something",
+      "myself": "me on my own, without help from others",
+      "party":  "a fun gathering where people celebrate together",
+      "buy":    "to pay money to get something",
+      "family": "the group of people you are related to, like parents and siblings"
+    },
+    passage:
+      "My <strong>family</strong> lives in a big <strong>city</strong>. Every year on my birthday, my parents plan a <strong>party</strong> for me. " +
+      "This year, I turned <strong>seven</strong>! My mom said, \"<strong>Please</strong> invite your friends from <strong>school</strong>.\" " +
+      "I wrote the invitations all by <strong>myself</strong>. Dad went to the store to <strong>buy</strong> balloons and a big cake. " +
+      "When my friends arrived, we played games and sang songs. It was the best party in the whole city!",
+    passagePlain:
+      "My family lives in a big city. Every year on my birthday, my parents plan a party for me. " +
+      "This year, I turned seven! My mom said, \"Please invite your friends from school.\" " +
+      "I wrote the invitations all by myself. Dad went to the store to buy balloons and a big cake. " +
+      "When my friends arrived, we played games and sang songs. It was the best party in the whole city!",
+    comprehension: [
+      {
+        q: "Where does the child's family live?",
+        choices: ["in a small town","in a big city","on a farm","near the beach"],
+        correct: "in a big city",
+        explain: "The child's <strong>family</strong> lives in a big <strong>city</strong>."
+      },
+      {
+        q: "How old did the child turn at the party?",
+        choices: ["five","six","seven","eight"],
+        correct: "seven",
+        explain: "The child turned <strong>seven</strong> this year."
+      },
+      {
+        q: "Who did the child invite to the party?",
+        choices: ["cousins","neighbors","friends from school","teachers"],
+        correct: "friends from school",
+        explain: "Mom said to invite friends from <strong>school</strong>."
+      },
+      {
+        q: "Who wrote the invitations?",
+        choices: ["Mom","Dad","a friend","the child by themselves"],
+        correct: "the child by themselves",
+        explain: "The child wrote the invitations all by <strong>myself</strong>."
+      }
+    ],
+    spelling: [
+      { word: "city",   blanks: [1,2], hint: "🏙️ A large, busy place where many people live" },
+      { word: "school", blanks: [2,3], hint: "🏫 A place where children go to learn" },
+      { word: "seven",  blanks: [1,2], hint: "7️⃣ The number 7" },
+      { word: "please", blanks: [2,3], hint: "🙏 A polite word when asking for something" },
+      { word: "myself", blanks: [2,3], hint: "🙋 Me on my own, without help" },
+      { word: "party",  blanks: [1,2], hint: "🎉 A fun gathering to celebrate" },
+      { word: "buy",    blanks: [1,2], hint: "🛒 To pay money to get something" },
+      { word: "family", blanks: [2,3], hint: "👨‍👩‍👧 The people you are related to" }
+    ],
+    usage: [
+      { sentence: "We moved to a big ___ with tall buildings.",          correct: "city",   choices: ["city","party","school"] },
+      { sentence: "I walk to ___ every morning to learn.",               correct: "school", choices: ["family","school","myself"] },
+      { sentence: "There are ___ days in one week.",                     correct: "seven",  choices: ["seven","buy","please"] },
+      { sentence: "May I have some water, ___?",                         correct: "please", choices: ["please","city","seven"] },
+      { sentence: "I made this card all by ___.",                        correct: "myself", choices: ["family","myself","party"] },
+      { sentence: "We had a ___ with balloons and cake.",                correct: "party",  choices: ["party","buy","school"] },
+      { sentence: "Dad will ___ a gift for my birthday.",                correct: "buy",    choices: ["buy","please","city"] },
+      { sentence: "My ___ loves to eat dinner together every night.",    correct: "family", choices: ["family","seven","myself"] }
+    ]
   }
 };
 
@@ -1480,10 +1555,52 @@ function addStars(n) {
 function logAnswer(correct, q, chosen, right, explain) {
   state.totalAnswered++;
   if (correct) state.totalCorrect++;
+  // Capture context (library / unit / topic) so the Excel export can
+  // populate the per-quiz columns just like the AdeptBuddy Chronicle.
+  const isReading = !!state.currentUnit;
+  let library = '';
+  let unit = '';
+  if (isReading && READING_UNITS[state.currentUnit]) {
+    const u = READING_UNITS[state.currentUnit];
+    library = 'Reading';
+    unit = `${u.title}: ${u.subtitle}`;
+  } else if (state.currentWeek && WEEKS[state.currentWeek]) {
+    const w = WEEKS[state.currentWeek];
+    library = 'Phonics';
+    unit = `${w.title}: ${w.subtitle}`;
+  }
+  const topicMap = {
+    A: 'Missing-letter Quiz',
+    B: 'Best-word Quiz',
+    C: 'Same-vowel Quiz',
+    spelling: 'Spelling Quiz',
+    usage: 'Usage Quiz',
+    comprehension: 'Comprehension Quiz'
+  };
+  const topic = topicMap[state.quizType] || '';
+  // Pull the full options list off the current quiz item so we can show
+  // all four choices in the export, matching the attached format.
+  let allOptions = '';
+  const item = state.quizQuestions[state.quizIndex];
+  if (item && Array.isArray(item.options)) {
+    allOptions = item.options
+      .map((opt, i) => `${String.fromCharCode(65 + i)}. ${opt}`)
+      .join('\n');
+  }
   state.log.push({
     time: nowStr(),
     kind: correct ? 'correct' : 'wrong',
-    text: `${correct ? '✅' : '❌'} Q: ${stripTags(q).slice(0,180)} | You: ${chosen} | Answer: ${right}`
+    text: `${correct ? '✅' : '❌'} Q: ${stripTags(q).slice(0,180)} | You: ${chosen} | Answer: ${right}`,
+    quiz: {
+      library,
+      unit,
+      topic,
+      question: stripTags(q),
+      options: allOptions,
+      yourAnswer: chosen,
+      correctAnswer: right,
+      explanation: stripTags(explain || '')
+    }
   });
 }
 
@@ -1507,7 +1624,7 @@ function showWelcome() {
     "📖 <strong>Reading units</strong> — read a story, learn new words, and try spelling and usage quizzes!",
     [
       { label: "📚 Phonics (Weeks 25–32)", onClick: () => { userSay("Phonics weeks"); showWeekMenu(); } },
-      { label: "📖 Reading (Units 23–24)", onClick: () => { userSay("Reading units"); showReadingMenu(); } }
+      { label: "📖 Reading (Units 23–25)", onClick: () => { userSay("Reading units"); showReadingMenu(); } }
     ]
   );
 }
@@ -2138,30 +2255,182 @@ document.getElementById('log-clear').onclick = () => {
   }
 };
 document.getElementById('log-export').onclick = () => {
-  // Remove emoji and any characters outside the XML 1.0 safe range,
-  // which cause "XML parsing error" when Excel opens the file.
-  function xlSafe(s) {
-    return String(s)
-      // strip emoji & symbols (Unicode blocks U+1F000 and above)
-      .replace(/[\u{1F000}-\u{1FFFF}]/gu, '')
-      // strip other common emoji / symbol ranges
-      .replace(/[☀-➿]/g, '')
-      // strip XML 1.0 illegal control chars (keep tab \x09, LF \x0A, CR \x0D)
-      .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '')
+  // Strip emoji / control chars that break some spreadsheet renderers
+  // but keep the structure (newlines stay) so multi-line cells survive.
+  function clean(s) {
+    return String(s ?? '')
+      .replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}]/gu, '')
+      .replace(/[☀-➿⬀-⯿︀-️]/g, '')
+      .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, ' ')
       .trim();
   }
-  const kindLabel = { bot: 'Buddy', user: 'You', correct: 'Correct', wrong: 'Wrong', system: 'System' };
-  const rows = [['Time', 'Type', 'Message']];
-  state.log.forEach(e => {
-    const label = xlSafe(kindLabel[e.kind] || e.kind);
-    const msg = xlSafe(e.text);
-    rows.push([xlSafe(e.time), label, msg]);
+  function cleanInline(s) {
+    // Same as clean(), but also collapses newlines — used for short fields
+    // like "Your Answer" that shouldn't wrap.
+    return clean(s).replace(/\s*\n+\s*/g, ' ').trim();
+  }
+
+  const kindLabel = {
+    bot: 'Buddy', user: 'You',
+    correct: 'Correct', wrong: 'Wrong', system: 'System'
+  };
+  const speakerLabel = {
+    bot: 'Buddy', user: 'Student',
+    correct: 'Quiz (Correct)', wrong: 'Quiz (Wrong)', system: 'System'
+  };
+  const typeLabel = {
+    bot: 'Bot', user: 'User',
+    correct: 'Correct', wrong: 'Wrong', system: 'System'
+  };
+
+  const nowExport = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const exportedStamp =
+    `${nowExport.getFullYear()}-${pad(nowExport.getMonth()+1)}-${pad(nowExport.getDate())} ` +
+    `${pad(nowExport.getHours())}:${pad(nowExport.getMinutes())}:${pad(nowExport.getSeconds())}`;
+  const fnameStamp =
+    `${nowExport.getFullYear()}-${pad(nowExport.getMonth()+1)}-${pad(nowExport.getDate())}` +
+    `_${pad(nowExport.getHours())}${pad(nowExport.getMinutes())}`;
+
+  const total = state.totalAnswered || 0;
+  const correctCount = state.totalCorrect || 0;
+  const wrongCount = Math.max(0, total - correctCount);
+  const accuracy = total ? Math.round((correctCount / total) * 100) + '%' : '0%';
+
+  // --- Sheet 1: Summary ---
+  const summaryAOA = [
+    ['Phonics Buddy — Chronicle of Trials'],
+    ['Exported', exportedStamp],
+    [],
+    ['Statistic', 'Value'],
+    ['Questions Answered', total],
+    ['Correct', correctCount],
+    ['Incorrect', wrongCount],
+    ['Accuracy', accuracy],
+    ['Stars Earned', state.score || 0],
+    ['Total Log Entries', state.log.length]
+  ];
+
+  // --- Sheet 2: Full Log ---
+  const fullLogAOA = [['#', 'Time', 'Type', 'Speaker', 'Message']];
+  state.log.forEach((e, i) => {
+    fullLogAOA.push([
+      i + 1,
+      clean(e.time),
+      typeLabel[e.kind] || e.kind,
+      speakerLabel[e.kind] || '',
+      clean(e.text)
+    ]);
   });
-  const ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [{ wch: 10 }, { wch: 10 }, { wch: 60 }];
+
+  // --- Sheets 3-5: Quiz views ---
+  const quizAOA = [['#', 'Time', 'Result', 'Library', 'Unit', 'Topic',
+                    'Question', 'All Options', 'Your Answer',
+                    'Correct Answer', 'Explanation']];
+  const correctAOA = [['#', 'Time', 'Library', 'Unit', 'Topic',
+                       'Question', 'Your Answer']];
+  const wrongAOA = [['#', 'Time', 'Library', 'Unit', 'Topic',
+                     'Question', 'All Options', 'Your Answer',
+                     'Correct Answer', 'Explanation']];
+
+  let quizIdx = 0, correctIdx = 0, wrongIdx = 0;
+  state.log.forEach(e => {
+    if (e.kind !== 'correct' && e.kind !== 'wrong') return;
+    const q = e.quiz || {};
+    quizIdx++;
+    quizAOA.push([
+      quizIdx,
+      clean(e.time),
+      e.kind === 'correct' ? '✓ Correct' : '✗ Wrong',
+      clean(q.library),
+      clean(q.unit),
+      clean(q.topic),
+      clean(q.question),
+      clean(q.options),
+      cleanInline(q.yourAnswer),
+      cleanInline(q.correctAnswer),
+      clean(q.explanation)
+    ]);
+    if (e.kind === 'correct') {
+      correctIdx++;
+      correctAOA.push([
+        correctIdx,
+        clean(e.time),
+        clean(q.library),
+        clean(q.unit),
+        clean(q.topic),
+        clean(q.question),
+        cleanInline(q.yourAnswer)
+      ]);
+    } else {
+      wrongIdx++;
+      wrongAOA.push([
+        wrongIdx,
+        clean(e.time),
+        clean(q.library),
+        clean(q.unit),
+        clean(q.topic),
+        clean(q.question),
+        clean(q.options),
+        cleanInline(q.yourAnswer),
+        cleanInline(q.correctAnswer),
+        clean(q.explanation)
+      ]);
+    }
+  });
+
+  // Build the workbook
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'Phonics Log');
-  XLSX.writeFile(wb, `phonics-log-${new Date().toISOString().slice(0,10)}.xlsx`);
+
+  const wsSummary = XLSX.utils.aoa_to_sheet(summaryAOA);
+  wsSummary['!cols'] = [{ wch: 24 }, { wch: 28 }];
+
+  const wsLog = XLSX.utils.aoa_to_sheet(fullLogAOA);
+  wsLog['!cols'] = [{ wch: 5 }, { wch: 20 }, { wch: 10 },
+                    { wch: 14 }, { wch: 80 }];
+
+  const wsQuiz = XLSX.utils.aoa_to_sheet(quizAOA);
+  wsQuiz['!cols'] = [{ wch: 5 }, { wch: 20 }, { wch: 11 }, { wch: 14 },
+                     { wch: 28 }, { wch: 22 }, { wch: 50 }, { wch: 28 },
+                     { wch: 18 }, { wch: 18 }, { wch: 50 }];
+
+  const wsCorrect = XLSX.utils.aoa_to_sheet(correctAOA);
+  wsCorrect['!cols'] = [{ wch: 5 }, { wch: 20 }, { wch: 14 },
+                        { wch: 28 }, { wch: 22 }, { wch: 50 }, { wch: 18 }];
+
+  const wsWrong = XLSX.utils.aoa_to_sheet(wrongAOA);
+  wsWrong['!cols'] = [{ wch: 5 }, { wch: 20 }, { wch: 14 }, { wch: 28 },
+                      { wch: 22 }, { wch: 50 }, { wch: 28 }, { wch: 18 },
+                      { wch: 18 }, { wch: 50 }];
+
+  // Enable wrap-text on the long, multi-line cells so they render the
+  // way the attached chronicle does in Excel.
+  function enableWrap(ws, cols) {
+    if (!ws['!ref']) return;
+    const range = XLSX.utils.decode_range(ws['!ref']);
+    for (let R = range.s.r; R <= range.e.r; ++R) {
+      cols.forEach(C => {
+        const addr = XLSX.utils.encode_cell({ r: R, c: C });
+        const cell = ws[addr];
+        if (cell) {
+          cell.s = cell.s || {};
+          cell.s.alignment = { wrapText: true, vertical: 'top' };
+        }
+      });
+    }
+  }
+  enableWrap(wsLog, [4]);             // Message
+  enableWrap(wsQuiz, [6, 7, 10]);     // Question / Options / Explanation
+  enableWrap(wsCorrect, [5]);         // Question
+  enableWrap(wsWrong, [5, 6, 9]);     // Question / Options / Explanation
+
+  XLSX.utils.book_append_sheet(wb, wsSummary, 'Summary');
+  XLSX.utils.book_append_sheet(wb, wsLog,     'Full Log');
+  XLSX.utils.book_append_sheet(wb, wsQuiz,    'All Quiz Answers');
+  XLSX.utils.book_append_sheet(wb, wsCorrect, 'Correct');
+  XLSX.utils.book_append_sheet(wb, wsWrong,   'Wrong (Review)');
+
+  XLSX.writeFile(wb, `PhonicsBuddy_Chronicle_${fnameStamp}.xlsx`);
 };
 
 /* ================================================================
