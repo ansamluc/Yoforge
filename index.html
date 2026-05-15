@@ -672,6 +672,9 @@
   .unit-btn.u23 { border-color: var(--p-orange); color: var(--p-orange-dark); box-shadow: 0 3px 0 var(--p-orange-dark); }
   .unit-btn.u24 { border-color: var(--p-green); color: var(--p-green-dark); box-shadow: 0 3px 0 var(--p-green-dark); }
   .unit-btn.u25 { border-color: var(--p-purple); color: var(--p-purple-dark); box-shadow: 0 3px 0 var(--p-purple-dark); }
+  .unit-btn.u26 { border-color: var(--p-blue); color: var(--p-blue-dark); box-shadow: 0 3px 0 var(--p-blue-dark); }
+  .unit-btn.u27 { border-color: var(--p-pink); color: var(--p-pink-dark); box-shadow: 0 3px 0 var(--p-pink-dark); }
+  .unit-btn.u28 { border-color: var(--p-yellow-dark); color: var(--p-yellow-dark); box-shadow: 0 3px 0 var(--p-yellow-dark); }
 
   .reading-passage {
     background: linear-gradient(135deg, #fff8e8, #fff5d0);
@@ -1483,6 +1486,233 @@ const READING_UNITS = {
       { sentence: "Dad will ___ a gift for my birthday.",                correct: "buy",    choices: ["buy","please","city"] },
       { sentence: "My ___ loves to eat dinner together every night.",    correct: "family", choices: ["family","seven","myself"] }
     ]
+  },
+
+  u26: {
+    title: "Unit 26",
+    subtitle: "The Brave Little Bear",
+    emoji: "🐻",
+    cssClass: "u26",
+    vocab: ["teacher","studied","surprised","toward","bear","above","even","pushed"],
+    defs: {
+      "teacher":   "a person who helps you learn at school",
+      "studied":   "spent time learning or reading about something",
+      "surprised": "feeling shocked by something you did not expect",
+      "toward":    "in the direction of something",
+      "bear":      "a large, furry animal that lives in the woods",
+      "above":     "in a higher place than something else",
+      "even":      "used to show something is unexpected or surprising",
+      "pushed":    "moved something away from you with your hands"
+    },
+    passage:
+      "At school, our <strong>teacher</strong> read us a story about a brave little <strong>bear</strong>. " +
+      "The bear had <strong>studied</strong> the forest until he knew every path and tree. " +
+      "One day, dark clouds gathered <strong>above</strong> the hills, and rain began to fall. " +
+      "The little bear walked <strong>toward</strong> a cozy cave to stay dry. " +
+      "He <strong>pushed</strong> a heavy branch away from the door so his friends could come inside too. " +
+      "We were all <strong>surprised</strong> that such a small bear could be so kind — he helped <strong>even</strong> the tiniest mouse.",
+    passagePlain:
+      "At school, our teacher read us a story about a brave little bear. " +
+      "The bear had studied the forest until he knew every path and tree. " +
+      "One day, dark clouds gathered above the hills, and rain began to fall. " +
+      "The little bear walked toward a cozy cave to stay dry. " +
+      "He pushed a heavy branch away from the door so his friends could come inside too. " +
+      "We were all surprised that such a small bear could be so kind — he helped even the tiniest mouse.",
+    comprehension: [
+      {
+        q: "Who read the story to the class?",
+        choices: ["a friend","the teacher","the bear","a parent"],
+        correct: "the teacher",
+        explain: "Our <strong>teacher</strong> read us the story."
+      },
+      {
+        q: "How did the bear know every path and tree?",
+        choices: ["he guessed","he had studied the forest","a map told him","he was lucky"],
+        correct: "he had studied the forest",
+        explain: "The bear had <strong>studied</strong> the forest until he knew it well."
+      },
+      {
+        q: "Where did the little bear walk to stay dry?",
+        choices: ["toward a cave","toward a river","toward the school","toward a tree"],
+        correct: "toward a cave",
+        explain: "The bear walked <strong>toward</strong> a cozy cave."
+      },
+      {
+        q: "Why were the children surprised?",
+        choices: ["the bear was scary","the bear was so kind","the bear was big","the bear could fly"],
+        correct: "the bear was so kind",
+        explain: "They were <strong>surprised</strong> that such a small bear could be so kind."
+      }
+    ],
+    spelling: [
+      { word: "teacher",   blanks: [2,3], hint: "👩‍🏫 A person who helps you learn at school" },
+      { word: "studied",   blanks: [2,3], hint: "📚 Spent time learning about something" },
+      { word: "surprised", blanks: [3,4], hint: "😲 Feeling shocked by something unexpected" },
+      { word: "toward",    blanks: [2,3], hint: "➡️ In the direction of something" },
+      { word: "bear",      blanks: [1,2], hint: "🐻 A large, furry animal in the woods" },
+      { word: "above",     blanks: [1,2], hint: "⬆️ In a higher place than something else" },
+      { word: "even",      blanks: [1,2], hint: "✨ Shows something is surprising" },
+      { word: "pushed",    blanks: [2,3], hint: "🤚 Moved something away with your hands" }
+    ],
+    usage: [
+      { sentence: "My ___ helps me read new words.",                  correct: "teacher",   choices: ["teacher","bear","above"] },
+      { sentence: "I ___ hard for my spelling test.",                  correct: "studied",   choices: ["studied","toward","even"] },
+      { sentence: "I was ___ to see a rainbow in the sky.",            correct: "surprised", choices: ["surprised","pushed","bear"] },
+      { sentence: "The dog ran ___ the open door.",                    correct: "toward",    choices: ["toward","studied","above"] },
+      { sentence: "We saw a brown ___ at the zoo.",                    correct: "bear",      choices: ["bear","even","teacher"] },
+      { sentence: "The bird flew high ___ the trees.",                 correct: "above",     choices: ["above","pushed","toward"] },
+      { sentence: "She was so tired she fell asleep ___ in the car.",  correct: "even",      choices: ["even","bear","studied"] },
+      { sentence: "He ___ the heavy box across the floor.",            correct: "pushed",    choices: ["pushed","surprised","above"] }
+    ]
+  },
+
+  u27: {
+    title: "Unit 27",
+    subtitle: "Stories on the Hill",
+    emoji: "📖",
+    cssClass: "u27",
+    vocab: ["difference","near","enough","stories","high","always","happy"],
+    defs: {
+      "difference": "the way one thing is not the same as another",
+      "near":       "close to something, not far away",
+      "enough":     "as much as you need",
+      "stories":    "tales that are told or written to share",
+      "high":       "far up from the ground",
+      "always":     "every time, all the time",
+      "happy":      "feeling glad and full of joy"
+    },
+    passage:
+      "Grandma lives in a little house <strong>near</strong> the top of a <strong>high</strong> green hill. " +
+      "Every weekend, she tells us <strong>stories</strong> about when she was a girl. " +
+      "She <strong>always</strong> has time to read with us, and she keeps <strong>enough</strong> books for everyone. " +
+      "I learned the <strong>difference</strong> between a true story and a make-believe one. " +
+      "When we visit Grandma, we are very <strong>happy</strong>, and we never want to go home.",
+    passagePlain:
+      "Grandma lives in a little house near the top of a high green hill. " +
+      "Every weekend, she tells us stories about when she was a girl. " +
+      "She always has time to read with us, and she keeps enough books for everyone. " +
+      "I learned the difference between a true story and a make-believe one. " +
+      "When we visit Grandma, we are very happy, and we never want to go home.",
+    comprehension: [
+      {
+        q: "Where does Grandma's house sit?",
+        choices: ["near the top of a high hill","by the sea","in a busy city","in a deep cave"],
+        correct: "near the top of a high hill",
+        explain: "Grandma lives <strong>near</strong> the top of a <strong>high</strong> hill."
+      },
+      {
+        q: "What does Grandma do every weekend?",
+        choices: ["tells us stories","bakes bread","goes fishing","plants flowers"],
+        correct: "tells us stories",
+        explain: "Every weekend she tells us <strong>stories</strong>."
+      },
+      {
+        q: "How many books does Grandma keep?",
+        choices: ["only one","not very many","enough for everyone","none at all"],
+        correct: "enough for everyone",
+        explain: "She keeps <strong>enough</strong> books for everyone."
+      },
+      {
+        q: "How do the children feel when they visit Grandma?",
+        choices: ["sad","bored","happy","scared"],
+        correct: "happy",
+        explain: "When they visit Grandma, they are very <strong>happy</strong>."
+      }
+    ],
+    spelling: [
+      { word: "difference", blanks: [3,4], hint: "🔀 How one thing is not the same as another" },
+      { word: "near",       blanks: [1,2], hint: "📍 Close to something, not far away" },
+      { word: "enough",     blanks: [2,3], hint: "✅ As much as you need" },
+      { word: "stories",    blanks: [2,3], hint: "📖 Tales that are told or written" },
+      { word: "high",       blanks: [1,2], hint: "⬆️ Far up from the ground" },
+      { word: "always",     blanks: [2,3], hint: "♾️ Every time, all the time" },
+      { word: "happy",      blanks: [2,3], hint: "😊 Feeling glad and full of joy" }
+    ],
+    usage: [
+      { sentence: "Can you tell the ___ between a cat and a dog?",   correct: "difference", choices: ["difference","near","high"] },
+      { sentence: "The store is ___ my house, so we can walk.",       correct: "near",       choices: ["near","enough","always"] },
+      { sentence: "I have ___ crayons to share with my friend.",      correct: "enough",     choices: ["enough","stories","happy"] },
+      { sentence: "I love to read ___ before bedtime.",               correct: "stories",    choices: ["stories","near","difference"] },
+      { sentence: "The kite flew very ___ in the sky.",               correct: "high",       choices: ["high","enough","always"] },
+      { sentence: "She ___ smiles when she sees her puppy.",          correct: "always",     choices: ["always","near","stories"] },
+      { sentence: "I felt ___ when I got a new bike.",                correct: "happy",      choices: ["happy","high","difference"] }
+    ]
+  },
+
+  u28: {
+    title: "Unit 28",
+    subtitle: "The Big Game",
+    emoji: "⚽",
+    cssClass: "u28",
+    vocab: ["second","ball","across","head","heard","large","cried","should"],
+    defs: {
+      "second":  "the one that comes right after the first",
+      "ball":    "a round toy you can throw, kick, or bounce",
+      "across":  "from one side to the other side",
+      "head":    "the top part of your body where your face is",
+      "heard":   "noticed a sound with your ears",
+      "large":   "very big in size",
+      "cried":   "let tears fall, often because of feelings",
+      "should":  "used to say the right or good thing to do"
+    },
+    passage:
+      "On the <strong>second</strong> day of the big game, our team ran out onto the <strong>large</strong> field. " +
+      "Maya kicked the <strong>ball</strong> hard, and it flew <strong>across</strong> the grass. " +
+      "Then Ben jumped up and hit it with his <strong>head</strong> — right into the net! " +
+      "We <strong>heard</strong> the whole crowd cheer and clap. " +
+      "One player on the other team <strong>cried</strong> because they lost, so we told her she <strong>should</strong> be proud of how well she played.",
+    passagePlain:
+      "On the second day of the big game, our team ran out onto the large field. " +
+      "Maya kicked the ball hard, and it flew across the grass. " +
+      "Then Ben jumped up and hit it with his head — right into the net! " +
+      "We heard the whole crowd cheer and clap. " +
+      "One player on the other team cried because they lost, so we told her she should be proud of how well she played.",
+    comprehension: [
+      {
+        q: "Which day of the game does the story tell about?",
+        choices: ["the first day","the second day","the third day","the last day"],
+        correct: "the second day",
+        explain: "It was the <strong>second</strong> day of the big game."
+      },
+      {
+        q: "How did Ben get the ball into the net?",
+        choices: ["with his foot","with his hand","with his head","with a bat"],
+        correct: "with his head",
+        explain: "Ben hit the ball with his <strong>head</strong>."
+      },
+      {
+        q: "What did the team hear after the goal?",
+        choices: ["a whistle","the crowd cheer","a bell ring","the rain fall"],
+        correct: "the crowd cheer",
+        explain: "They <strong>heard</strong> the whole crowd cheer and clap."
+      },
+      {
+        q: "Why did a player on the other team cry?",
+        choices: ["she was hurt","her team lost","she was tired","she lost her shoe"],
+        correct: "her team lost",
+        explain: "She <strong>cried</strong> because her team lost the game."
+      }
+    ],
+    spelling: [
+      { word: "second", blanks: [2,3], hint: "2️⃣ The one right after the first" },
+      { word: "ball",   blanks: [1,2], hint: "⚽ A round toy you can throw or kick" },
+      { word: "across", blanks: [2,3], hint: "↔️ From one side to the other" },
+      { word: "head",   blanks: [1,2], hint: "🧑 The top part of your body" },
+      { word: "heard",  blanks: [2,3], hint: "👂 Noticed a sound with your ears" },
+      { word: "large",  blanks: [1,2], hint: "🐘 Very big in size" },
+      { word: "cried",  blanks: [2,3], hint: "😢 Let tears fall" },
+      { word: "should", blanks: [2,3], hint: "👍 The right or good thing to do" }
+    ],
+    usage: [
+      { sentence: "She finished in ___ place in the race.",          correct: "second", choices: ["second","ball","large"] },
+      { sentence: "We kicked the ___ around the playground.",        correct: "ball",   choices: ["ball","across","heard"] },
+      { sentence: "The cat ran ___ the street to the other side.",   correct: "across", choices: ["across","head","should"] },
+      { sentence: "I wear a hat on my ___ when it is sunny.",        correct: "head",   choices: ["head","cried","second"] },
+      { sentence: "I ___ a bird singing this morning.",              correct: "heard",  choices: ["heard","large","ball"] },
+      { sentence: "An elephant is a very ___ animal.",               correct: "large",  choices: ["large","across","should"] },
+      { sentence: "The baby ___ when she dropped her toy.",          correct: "cried",  choices: ["cried","head","second"] },
+      { sentence: "You ___ brush your teeth before bed.",            correct: "should", choices: ["should","heard","ball"] }
+    ]
   }
 };
 
@@ -1623,8 +1853,8 @@ function showWelcome() {
     "📚 <strong>Phonics weeks</strong> — learn new sounds and play fun quizzes.<br>" +
     "📖 <strong>Reading units</strong> — read a story, learn new words, and try spelling and usage quizzes!",
     [
-      { label: "📚 Phonics (Weeks 25–32)", onClick: () => { userSay("Phonics weeks"); showWeekMenu(); } },
-      { label: "📖 Reading (Units 23–25)", onClick: () => { userSay("Reading units"); showReadingMenu(); } }
+      { label: "📚 Phonics", onClick: () => { userSay("Phonics"); showWeekMenu(); } },
+      { label: "📖 Reading", onClick: () => { userSay("Reading"); showReadingMenu(); } }
     ]
   );
 }
@@ -1643,7 +1873,7 @@ function showWeekMenu() {
   });
   html += "</div>";
   botSay(html, [
-    { label: "📖 Switch to Reading Units", onClick: () => { userSay("Reading units"); showReadingMenu(); } }
+    { label: "📖 Switch to Reading", onClick: () => { userSay("Reading"); showReadingMenu(); } }
   ]);
 }
 
@@ -1905,7 +2135,7 @@ function showReadingMenu() {
   });
   html += "</div>";
   botSay(html, [
-    { label: "📚 Switch to Phonics Weeks", onClick: () => { userSay("Phonics weeks"); showWeekMenu(); } }
+    { label: "📚 Switch to Phonics", onClick: () => { userSay("Phonics"); showWeekMenu(); } }
   ]);
 }
 
