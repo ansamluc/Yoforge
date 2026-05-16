@@ -877,7 +877,14 @@ const WEEKS = {
       { word: "ball",  blanks: [1,2], pictureHint: "⚽ Round toy you kick" },
       { word: "salt",  blanks: [1,2], pictureHint: "🧂 White stuff on food" },
       { word: "walk",  blanks: [1,2], pictureHint: "🚶 Move with your feet" },
-      { word: "chalk", blanks: [2,3], pictureHint: "✏️ Used to write on a blackboard" }
+      { word: "chalk", blanks: [2,3], pictureHint: "✏️ Used to write on a blackboard" },
+      // Harder items
+      { word: "shawl",  blanks: [2,3], pictureHint: "🧣 A wrap worn over the shoulders" },
+      { word: "crawl",  blanks: [2,3], pictureHint: "👶 To move on hands and knees" },
+      { word: "vault",  blanks: [1,2], pictureHint: "🏦 A safe room where money is kept" },
+      { word: "stalk",  blanks: [2,3], pictureHint: "🌽 The long stem of a plant" },
+      { word: "sauce",  blanks: [1,2], pictureHint: "🍝 Liquid you put on pasta" },
+      { word: "stall",  blanks: [2,3], pictureHint: "🐴 A small space in a barn" }
     ],
     // For Part B (choose the word to complete a sentence)
     partB: [
@@ -886,7 +893,14 @@ const WEEKS = {
       { sentence: "Mom waters the ___ each day.", correct: "lawn", choices: ["lawn","yawn","fawn"] },
       { sentence: "We ___ about math in class.", correct: "talk", choices: ["talk","salt","thaw"] },
       { sentence: "The baby boy likes to ___.", correct: "crawl", choices: ["cause","crawl","chalk"] },
-      { sentence: "Please add ___ to the soup.", correct: "salt", choices: ["salt","walk","saw"] }
+      { sentence: "Please add ___ to the soup.", correct: "salt", choices: ["salt","walk","saw"] },
+      // Harder items — distractors share spelling patterns
+      { sentence: "Grandma wrapped a warm ___ around her shoulders.", correct: "shawl", choices: ["shawl","stall","stalk"] },
+      { sentence: "The eagle has a sharp ___ on each foot.", correct: "claw", choices: ["claw","crawl","chalk"] },
+      { sentence: "The bank keeps the gold inside a strong ___.", correct: "vault", choices: ["vault","fault","halt"] },
+      { sentence: "It was not my ___ that the glass broke.", correct: "fault", choices: ["fault","vault","salt"] },
+      { sentence: "Each horse has its own ___ in the barn.", correct: "stall", choices: ["stall","stalk","small"] },
+      { sentence: "The chef poured tomato ___ on the noodles.", correct: "sauce", choices: ["sauce","cause","saw"] }
     ],
     // For Part C (find two words with same vowel sound)
     // Each item has 3 words; exactly two share the vowel sound.
@@ -895,7 +909,13 @@ const WEEKS = {
       { words: ["fall","tall","fish"], sameSound: ["fall","tall"] },
       { words: ["walk","chalk","cat"], sameSound: ["walk","chalk"] },
       { words: ["draw","yawn","read"], sameSound: ["draw","yawn"] },
-      { words: ["salt","halt","bike"], sameSound: ["salt","halt"] }
+      { words: ["salt","halt","bike"], sameSound: ["salt","halt"] },
+      // Harder items — distractor word shares letters but not the target sound
+      { words: ["sauce","cause","sale"],   sameSound: ["sauce","cause"] },
+      { words: ["stall","small","steal"],  sameSound: ["stall","small"] },
+      { words: ["chalk","stalk","clock"],  sameSound: ["chalk","stalk"] },
+      { words: ["fault","vault","fast"],   sameSound: ["fault","vault"] },
+      { words: ["crawl","shawl","cool"],   sameSound: ["crawl","shawl"] }
     ]
   },
 
@@ -922,21 +942,41 @@ const WEEKS = {
       { word: "puzzle",  blanks: [2,3], pictureHint: "🧩 Pieces that fit together" },
       { word: "pickle",  blanks: [2,3], pictureHint: "🥒 A sour cucumber" },
       { word: "middle",  blanks: [2,3], pictureHint: "↔️ The center" },
-      { word: "giggle",  blanks: [2,3], pictureHint: "😆 A small laugh" }
+      { word: "giggle",  blanks: [2,3], pictureHint: "😆 A small laugh" },
+      // Harder items — longer or trickier le words (blanks hide the -le ending)
+      { word: "trickle",  blanks: [5,6], pictureHint: "💧 A tiny stream of water" },
+      { word: "snuggle",  blanks: [5,6], pictureHint: "🤗 To cuddle up close" },
+      { word: "drizzle",  blanks: [5,6], pictureHint: "🌦 A very light rain" },
+      { word: "kettle",   blanks: [4,5], pictureHint: "☕ A pot for boiling water" },
+      { word: "battle",   blanks: [4,5], pictureHint: "⚔️ A big fight" },
+      { word: "tumble",   blanks: [4,5], pictureHint: "🤸 To roll or fall over" }
     ],
     partB: [
       { sentence: "Walt is standing in the ___.", correct: "middle", choices: ["riddle","tumble","middle"] },
       { sentence: "Ron picked a ___ from the jar.", correct: "pickle", choices: ["pickle","trickle","triple"] },
       { sentence: "Carl will play the ___ in a band.", correct: "fiddle", choices: ["little","middle","fiddle"] },
       { sentence: "Dad used wax to make a ___.", correct: "candle", choices: ["wiggle","giggle","candle"] },
-      { sentence: "Jack and Beth can ___ the boat.", correct: "paddle", choices: ["puzzle","paddle","bubble"] }
+      { sentence: "Jack and Beth can ___ the boat.", correct: "paddle", choices: ["puzzle","paddle","bubble"] },
+      // Harder items — two close-sounding distractors
+      { sentence: "Mom asked me to solve the tricky ___.", correct: "riddle", choices: ["riddle","middle","fiddle"] },
+      { sentence: "A tiny ___ of water ran down the rock.", correct: "trickle", choices: ["trickle","tickle","triple"] },
+      { sentence: "The puppy likes to ___ with the warm blanket.", correct: "snuggle", choices: ["snuggle","struggle","sniffle"] },
+      { sentence: "A light ___ began to fall from the sky.", correct: "drizzle", choices: ["drizzle","dribble","dazzle"] },
+      { sentence: "The two knights had a long ___.", correct: "battle", choices: ["battle","bottle","beetle"] },
+      { sentence: "We boiled water in the ___.", correct: "kettle", choices: ["kettle","cattle","candle"] }
     ],
     partC: [
       { words: ["bubble","puddle","cake"],  sameSound: ["bubble","puddle"] },
       { words: ["apple","saddle","bee"],    sameSound: ["apple","saddle"] },
       { words: ["pickle","middle","duck"],  sameSound: ["pickle","middle"] },
       { words: ["candle","handle","roar"],  sameSound: ["candle","handle"] },
-      { words: ["giggle","wiggle","cone"],  sameSound: ["giggle","wiggle"] }
+      { words: ["giggle","wiggle","cone"],  sameSound: ["giggle","wiggle"] },
+      // Harder — two close 'le' words sharing a vowel, plus a trap with a different vowel
+      { words: ["snuggle","struggle","stable"], sameSound: ["snuggle","struggle"] },
+      { words: ["bottle","kettle","beetle"],    sameSound: ["bottle","kettle"] },
+      { words: ["drizzle","dribble","drape"],   sameSound: ["drizzle","dribble"] },
+      { words: ["tumble","jumble","table"],     sameSound: ["tumble","jumble"] },
+      { words: ["riddle","fiddle","ride"],      sameSound: ["riddle","fiddle"] }
     ]
   },
 
@@ -972,21 +1012,41 @@ const WEEKS = {
       { word: "rice",   blanks: [1,2], pictureHint: "🍚 Tiny white food grains" },
       { word: "cake",   blanks: [1,2], pictureHint: "🎂 Sweet birthday treat" },
       { word: "kite",   blanks: [1,2], pictureHint: "🪁 Flies in the sky on a string" },
-      { word: "mole",   blanks: [1,2], pictureHint: "🐹 A small animal that digs" }
+      { word: "mole",   blanks: [1,2], pictureHint: "🐹 A small animal that digs" },
+      // Harder items — longer words and prefix/suffix words from spelling list
+      { word: "plate",   blanks: [3,4], pictureHint: "🍽 You eat your food off this" },
+      { word: "slide",   blanks: [3,4], pictureHint: "🛝 You sit and zoom down at the playground" },
+      { word: "stone",   blanks: [3,4], pictureHint: "🪨 A small piece of rock" },
+      { word: "helpful", blanks: [5,6], pictureHint: "🤝 Full of help; willing to help" },
+      { word: "icy",     blanks: [0,1], pictureHint: "🧊 Covered in ice" },
+      { word: "lucky",   blanks: [3,4], pictureHint: "🍀 Having good luck (ends in long e)" }
     ],
     partB: [
       { sentence: "Kate plays the ___ in a band.", correct: "flute", choices: ["dude","flute","cube"] },
       { sentence: "The mole dug a deep ___.", correct: "hole", choices: ["role","pole","hole"] },
       { sentence: "We swam in the water at the ___.", correct: "lake", choices: ["fake","lake","rake"] },
       { sentence: "Jake made a plate for ___.", correct: "me", choices: ["me","see","we"] },
-      { sentence: "I like to eat ___ with sauce on it.", correct: "rice", choices: ["smile","rice","nice"] }
+      { sentence: "I like to eat ___ with sauce on it.", correct: "rice", choices: ["smile","rice","nice"] },
+      // Harder items — choices that all rhyme or all share patterns
+      { sentence: "Pete wrote a short ___ to his friend.", correct: "note", choices: ["note","nose","node"] },
+      { sentence: "The path was ___ after the storm.", correct: "icy", choices: ["icy","easy","itchy"] },
+      { sentence: "Mom said it was very ___ of me to help.", correct: "helpful", choices: ["helpful","hopeful","handful"] },
+      { sentence: "The ball rolled down the long ___.", correct: "slide", choices: ["slide","stride","slime"] },
+      { sentence: "Luke felt very ___ to win the prize.", correct: "lucky", choices: ["lucky","leaky","tricky"] },
+      { sentence: "Jane will ___ the chores again later.", correct: "redo", choices: ["redo","undo","reuse"] }
     ],
     partC: [
       { words: ["bike","kite","cat"],  sameSound: ["bike","kite"] },
       { words: ["cake","rake","mug"],  sameSound: ["cake","rake"] },
       { words: ["mole","cone","sit"],  sameSound: ["mole","cone"] },
       { words: ["flute","mule","bed"], sameSound: ["flute","mule"] },
-      { words: ["bee","tree","dog"],   sameSound: ["bee","tree"] }
+      { words: ["bee","tree","dog"],   sameSound: ["bee","tree"] },
+      // Harder — distractor word looks like the target spelling but doesn't share the vowel sound
+      { words: ["slide","mile","mill"],     sameSound: ["slide","mile"] },
+      { words: ["stone","note","not"],      sameSound: ["stone","note"] },
+      { words: ["plate","name","nap"],      sameSound: ["plate","name"] },
+      { words: ["cute","huge","cup"],       sameSound: ["cute","huge"] },
+      { words: ["me","tree","ten"],         sameSound: ["me","tree"] }
     ]
   },
 
@@ -1021,21 +1081,41 @@ const WEEKS = {
       { word: "spray",  blanks: [3,4], pictureHint: "💦 Tiny water that comes out of a bottle" },
       { word: "queen",  blanks: [2,3], pictureHint: "👑 A royal lady" },
       { word: "peach",  blanks: [1,2], pictureHint: "🍑 A fuzzy orange fruit" },
-      { word: "beak",   blanks: [1,2], pictureHint: "🐦 The hard mouth of a bird" }
+      { word: "beak",   blanks: [1,2], pictureHint: "🐦 The hard mouth of a bird" },
+      // Harder items — compound words and longer words
+      { word: "rainbow",  blanks: [1,2], pictureHint: "🌈 Colors in the sky after rain" },
+      { word: "sailboat", blanks: [1,2], pictureHint: "⛵ A boat that uses the wind to move" },
+      { word: "railroad", blanks: [1,2], pictureHint: "🚂 Tracks that trains run on" },
+      { word: "raindrop", blanks: [1,2], pictureHint: "💧 One little piece of falling rain" },
+      { word: "treetop",  blanks: [2,3], pictureHint: "🌳 The very top of a tree" },
+      { word: "stream",   blanks: [3,4], pictureHint: "🏞 A small flowing river (hides ea)" }
     ],
     partB: [
       { sentence: "We ___ for the bus at the bus stop.", correct: "wait", choices: ["mail","wait","aid"] },
       { sentence: "The class saw ___ eat fish at the zoo.", correct: "seals", choices: ["seals","feet","sheets"] },
       { sentence: "Reed had on long, ___ jeans.", correct: "green", choices: ["teeth","green","speed"] },
       { sentence: "We go to the park to ___.", correct: "play", choices: ["paid","seat","play"] },
-      { sentence: "I have socks on both of my ___.", correct: "feet", choices: ["free","feet","fate"] }
+      { sentence: "I have socks on both of my ___.", correct: "feet", choices: ["free","feet","fate"] },
+      // Harder items — closer-sounding choices
+      { sentence: "After the rain, a bright ___ filled the sky.", correct: "rainbow", choices: ["rainbow","raindrop","railroad"] },
+      { sentence: "We watched the ___ float across the lake.", correct: "sailboat", choices: ["sailboat","seashell","snowman"] },
+      { sentence: "The long train rolled down the ___.", correct: "railroad", choices: ["railroad","raindrop","rainbow"] },
+      { sentence: "Pete saw the bright orange ___ from the hill.", correct: "sunset", choices: ["sunset","seaside","seashell"] },
+      { sentence: "The ___ ran clear and cold past our cabin.", correct: "stream", choices: ["stream","steam","scream"] },
+      { sentence: "My team had a long ___ in art class.", correct: "meeting", choices: ["meeting","mailing","meaning"] }
     ],
     partC: [
       { words: ["snail","rain","bus"],  sameSound: ["snail","rain"] },
       { words: ["bee","feet","cow"],    sameSound: ["bee","feet"] },
       { words: ["bean","clean","top"],  sameSound: ["bean","clean"] },
       { words: ["day","play","go"],     sameSound: ["day","play"] },
-      { words: ["mail","sail","fox"],   sameSound: ["mail","sail"] }
+      { words: ["mail","sail","fox"],   sameSound: ["mail","sail"] },
+      // Harder — mix vowel teams; trap word looks similar
+      { words: ["spray","stay","spy"],     sameSound: ["spray","stay"] },
+      { words: ["queen","green","quit"],   sameSound: ["queen","green"] },
+      { words: ["beach","peach","bench"],  sameSound: ["beach","peach"] },
+      { words: ["train","brain","barn"],   sameSound: ["train","brain"] },
+      { words: ["seed","feed","said"],     sameSound: ["seed","feed"] }
     ]
   },
 
@@ -1070,21 +1150,41 @@ const WEEKS = {
       { word: "light",   blanks: [2,3], pictureHint: "💡 Bulb that helps you see" },
       { word: "flew",    blanks: [2,3], pictureHint: "🐦 A bird ___ away" },
       { word: "blue",    blanks: [2,3], pictureHint: "🟦 A color, like the sky" },
-      { word: "spy",     blanks: [1,2], pictureHint: "🕵️ A secret watcher" }
+      { word: "spy",     blanks: [1,2], pictureHint: "🕵️ A secret watcher" },
+      // Harder items — longer words and ed/ing endings from spelling list
+      { word: "bright",  blanks: [3,4], pictureHint: "💡 Shining with lots of light" },
+      { word: "flight",  blanks: [3,4], pictureHint: "✈️ A trip on a plane" },
+      { word: "stew",    blanks: [2,3], pictureHint: "🍲 A thick soup with meat and potatoes" },
+      { word: "baking",  blanks: [4,5], pictureHint: "🍪 Making cookies (ends with -ing)" },
+      { word: "fixes",   blanks: [3,4], pictureHint: "🔧 Mends something broken (ends with -es)" },
+      { word: "lunches", blanks: [5,6], pictureHint: "🥪 More than one lunch (ends with -es)" }
     ],
     partB: [
       { sentence: "We will ___ to go see Pop.", correct: "fly", choices: ["cry","fly","fry"] },
       { sentence: "Pete turns off the ___.", correct: "light", choices: ["night","light","might"] },
       { sentence: "Fred ___ his pet fish in art class.", correct: "drew", choices: ["grew","flew","drew"] },
       { sentence: "Gab's hair ___ an inch last month.", correct: "grew", choices: ["knew","grew","crew"] },
-      { sentence: "Hal left ___ for his mom to find.", correct: "clues", choices: ["blues","clues","glues"] }
+      { sentence: "Hal left ___ for his mom to find.", correct: "clues", choices: ["blues","clues","glues"] },
+      // Harder items — distractors share digraphs
+      { sentence: "Our plane took off on its long ___.", correct: "flight", choices: ["flight","fright","fight"] },
+      { sentence: "The sun was so ___ I had to wear shades.", correct: "bright", choices: ["bright","brought","brick"] },
+      { sentence: "Mom made beef ___ for dinner.", correct: "stew", choices: ["stew","straw","sleep"] },
+      { sentence: "Try to ___ on the spelling test.", correct: "try", choices: ["try","true","tray"] },
+      { sentence: "Joe needs a tube of ___ to fix the chair.", correct: "glue", choices: ["glue","grew","glide"] },
+      { sentence: "I packed two ___ for the school trip.", correct: "lunches", choices: ["lunches","lunchs","lunch"] }
     ],
     partC: [
       { words: ["fly","my","cat"],     sameSound: ["fly","my"] },
       { words: ["night","light","go"], sameSound: ["night","light"] },
       { words: ["glue","blue","cup"],  sameSound: ["glue","blue"] },
       { words: ["new","few","top"],    sameSound: ["new","few"] },
-      { words: ["tie","pie","red"],    sameSound: ["tie","pie"] }
+      { words: ["tie","pie","red"],    sameSound: ["tie","pie"] },
+      // Harder — y can sound like /ī/ or /ē/, igh and y can match, ew and ue can match
+      { words: ["sky","try","top"],        sameSound: ["sky","try"] },
+      { words: ["bright","right","bring"], sameSound: ["bright","right"] },
+      { words: ["crew","drew","draw"],     sameSound: ["crew","drew"] },
+      { words: ["true","clue","cup"],      sameSound: ["true","clue"] },
+      { words: ["high","sigh","hip"],      sameSound: ["high","sigh"] }
     ]
   },
 
@@ -1125,21 +1225,41 @@ const WEEKS = {
       { word: "star",   blanks: [2,3], pictureHint: "⭐ Shines in the night sky" },
       { word: "shirt",  blanks: [2,3], pictureHint: "👕 You wear it on your top" },
       { word: "girl",   blanks: [1,2], pictureHint: "👧 A young female person" },
-      { word: "horn",   blanks: [1,2], pictureHint: "📯 Makes a loud beep sound" }
+      { word: "horn",   blanks: [1,2], pictureHint: "📯 Makes a loud beep sound" },
+      // Harder items — multi-syllable r-controlled and contractions
+      { word: "circle",  blanks: [1,2], pictureHint: "⭕ A perfectly round shape" },
+      { word: "purple",  blanks: [1,2], pictureHint: "🟣 A color between red and blue" },
+      { word: "sister",  blanks: [4,5], pictureHint: "👭 A girl who shares your parents" },
+      { word: "number",  blanks: [4,5], pictureHint: "🔢 Like 7 or 12 or 100" },
+      { word: "they're", blanks: [5,6], pictureHint: "📝 Short way to say 'they are'" },
+      { word: "didn't",  blanks: [4,5], pictureHint: "📝 Short way to say 'did not'" }
     ],
     partB: [
       { sentence: "It's Gert's ___ to kick the ball.", correct: "turn", choices: ["turn","tore","turtle"] },
       { sentence: "Nora made a ___ for her dad.", correct: "card", choices: ["farm","bark","card"] },
       { sentence: "Bert works as a ___.", correct: "nurse", choices: ["surf","burst","nurse"] },
       { sentence: "Add water to ___ to make mud.", correct: "dirt", choices: ["chirp","dirt","bird"] },
-      { sentence: "Jack watched the bird ___ in the air.", correct: "soar", choices: ["soar","shore","snore"] }
+      { sentence: "Jack watched the bird ___ in the air.", correct: "soar", choices: ["soar","shore","snore"] },
+      // Harder — closer-sounding r-controlled words and contractions
+      { sentence: "Draw a ___ around the right answer.", correct: "circle", choices: ["circle","candle","cradle"] },
+      { sentence: "My favorite color is ___.", correct: "purple", choices: ["purple","people","puddle"] },
+      { sentence: "My ___ is two years older than me.", correct: "sister", choices: ["sister","silver","center"] },
+      { sentence: "Can you say each ___ from 1 to 20?", correct: "number", choices: ["number","center","letter"] },
+      { sentence: "Tom and Jen are happy because ___ on the team.", correct: "they're", choices: ["they're","there","their"] },
+      { sentence: "I ___ finish my homework yet.", correct: "didn't", choices: ["didn't","don't","won't"] }
     ],
     partC: [
       { words: ["park","star","fish"],  sameSound: ["park","star"] },
       { words: ["dirt","bird","sun"],   sameSound: ["dirt","bird"] },
       { words: ["corn","horn","cat"],   sameSound: ["corn","horn"] },
       { words: ["turtle","turn","tea"], sameSound: ["turtle","turn"] },
-      { words: ["store","more","fly"],  sameSound: ["store","more"] }
+      { words: ["store","more","fly"],  sameSound: ["store","more"] },
+      // Harder — er/ir/ur all share the same sound; these test the trickier overlaps
+      { words: ["her","bird","bell"],     sameSound: ["her","bird"] },
+      { words: ["nurse","third","note"],  sameSound: ["nurse","third"] },
+      { words: ["shore","board","shop"],  sameSound: ["shore","board"] },
+      { words: ["farm","art","fame"],     sameSound: ["farm","art"] },
+      { words: ["sport","fork","sock"],   sameSound: ["sport","fork"] }
     ]
   },
 
@@ -1178,21 +1298,41 @@ const WEEKS = {
       { word: "moon",   blanks: [2,3], pictureHint: "🌙 In the sky at night" },
       { word: "boy",    blanks: [1,2], pictureHint: "👦 A young male person" },
       { word: "boil",   blanks: [2,3], pictureHint: "♨️ Bubbling hot water" },
-      { word: "cow",    blanks: [1,2], pictureHint: "🐄 A farm animal that says moo" }
+      { word: "cow",    blanks: [1,2], pictureHint: "🐄 A farm animal that says moo" },
+      // Harder items — multi-syllable and trickier sound spellings
+      { word: "ground",  blanks: [2,3], pictureHint: "🌍 The dirt under your feet" },
+      { word: "shout",   blanks: [2,3], pictureHint: "📣 To call out very loudly" },
+      { word: "crown",   blanks: [2,3], pictureHint: "👑 What a king or queen wears" },
+      { word: "spoil",   blanks: [3,4], pictureHint: "🥛 What old milk does after a long time" },
+      { word: "enjoy",   blanks: [3,4], pictureHint: "😄 To have a great time doing something" },
+      { word: "spoon",   blanks: [2,3], pictureHint: "🥄 You use this to eat soup" }
     ],
     partB: [
       { sentence: "Cane watched the ___ juggle balls.", correct: "clown", choices: ["clean","clown","crowd"] },
       { sentence: "Rose saw a ___ floating in the sky.", correct: "cloud", choices: ["cloud","down","frown"] },
       { sentence: "Clay ___ on his soup to cool it.", correct: "blew", choices: ["stew","blew","grew"] },
       { sentence: "Drew sold his ___ at a yard sale.", correct: "toys", choices: ["boils","joins","toys"] },
-      { sentence: "I like to swim in the ___.", correct: "pool", choices: ["pool","cool","noon"] }
+      { sentence: "I like to swim in the ___.", correct: "pool", choices: ["pool","cool","noon"] },
+      // Harder — distractors share the spelling pattern but differ in one letter
+      { sentence: "We sat on the ___ to eat our picnic.", correct: "ground", choices: ["ground","gown","grown"] },
+      { sentence: "The queen put on her shiny ___.", correct: "crown", choices: ["crown","clown","cloud"] },
+      { sentence: "Don't ___ in the library; please be quiet.", correct: "shout", choices: ["shout","short","sleep"] },
+      { sentence: "The bread will ___ if we don't eat it.", correct: "spoil", choices: ["spoil","spool","soil"] },
+      { sentence: "We ___ the days at the beach so much.", correct: "enjoy", choices: ["enjoy","employ","empty"] },
+      { sentence: "Stir the soup with a big ___.", correct: "spoon", choices: ["spoon","spool","spin"] }
     ],
     partC: [
       { words: ["coin","soil","hat"],  sameSound: ["coin","soil"] },
       { words: ["toy","boy","cup"],    sameSound: ["toy","boy"] },
       { words: ["cloud","loud","fish"],sameSound: ["cloud","loud"] },
       { words: ["cow","plow","duck"],  sameSound: ["cow","plow"] },
-      { words: ["moon","soup","sit"],  sameSound: ["moon","soup"] }
+      { words: ["moon","soup","sit"],  sameSound: ["moon","soup"] },
+      // Harder — oi/oy share the same sound; ou/ow share another; tricky 'oo' splits
+      { words: ["coin","boy","bone"],     sameSound: ["coin","boy"] },
+      { words: ["round","town","run"],    sameSound: ["round","town"] },
+      { words: ["foot","book","food"],    sameSound: ["foot","book"] },
+      { words: ["pool","tool","took"],    sameSound: ["pool","tool"] },
+      { words: ["join","royal","road"],   sameSound: ["join","royal"] }
     ]
   },
 
@@ -1227,21 +1367,41 @@ const WEEKS = {
       { word: "table",  blanks: [3,4], pictureHint: "🪑 You eat dinner on this" },
       { word: "kettle", blanks: [4,5], pictureHint: "☕ Used to boil water for tea" },
       { word: "turtle", blanks: [4,5], pictureHint: "🐢 An animal with a shell" },
-      { word: "pickle", blanks: [4,5], pictureHint: "🥒 A sour green vegetable" }
+      { word: "pickle", blanks: [4,5], pictureHint: "🥒 A sour green vegetable" },
+      // Harder review items — mix of aw/au and le words from earlier weeks
+      { word: "crawl",   blanks: [2,3], pictureHint: "👶 To move on hands and knees" },
+      { word: "stalk",   blanks: [2,3], pictureHint: "🌽 The long stem of a plant" },
+      { word: "fault",   blanks: [1,2], pictureHint: "❌ When something is your mistake" },
+      { word: "noodles", blanks: [4,5], pictureHint: "🍜 Long strings of pasta" },
+      { word: "bottle",  blanks: [4,5], pictureHint: "🍼 A tall narrow container" },
+      { word: "marbles", blanks: [4,5], pictureHint: "🔮 Small round glass balls to play with" }
     ],
     partB: [
       { sentence: "We ___ to the bus stop.", correct: "walk", choices: ["walk","wall","will"] },
       { sentence: "Dad likes ___ on his corn.", correct: "salt", choices: ["salt","saw","shall"] },
       { sentence: "We saw the sun rise at ___.", correct: "dawn", choices: ["date","dime","dawn"] },
       { sentence: "Ted spilled red ___ on his shirt.", correct: "sauce", choices: ["sees","sauce","seals"] },
-      { sentence: "Mom painted the ___ light blue.", correct: "walls", choices: ["weeks","walks","walls"] }
+      { sentence: "Mom painted the ___ light blue.", correct: "walls", choices: ["weeks","walks","walls"] },
+      // Harder review items — close-sounding distractors across the unit
+      { sentence: "The baby learned to ___ before she could walk.", correct: "crawl", choices: ["crawl","claw","chalk"] },
+      { sentence: "It was nobody's ___ that the vase fell.", correct: "fault", choices: ["fault","vault","fall"] },
+      { sentence: "Mom boiled water in the ___ for tea.", correct: "kettle", choices: ["kettle","cattle","candle"] },
+      { sentence: "We ate ___ with hot tomato sauce.", correct: "noodles", choices: ["noodles","needles","saddles"] },
+      { sentence: "Carl played with bright glass ___ on the floor.", correct: "marbles", choices: ["marbles","muffins","middles"] },
+      { sentence: "The tall ___ of corn waved in the wind.", correct: "stalks", choices: ["stalks","stalls","talks"] }
     ],
     partC: [
       { words: ["walk","talk","fish"],  sameSound: ["walk","talk"] },
       { words: ["salt","halt","cup"],   sameSound: ["salt","halt"] },
       { words: ["dawn","yawn","ride"],  sameSound: ["dawn","yawn"] },
       { words: ["sauce","cause","tip"], sameSound: ["sauce","cause"] },
-      { words: ["bottle","kettle","sun"], sameSound: ["bottle","kettle"] }
+      { words: ["bottle","kettle","sun"], sameSound: ["bottle","kettle"] },
+      // Harder review items — trap word looks similar but has a different vowel sound
+      { words: ["crawl","shawl","cloud"],   sameSound: ["crawl","shawl"] },
+      { words: ["fault","vault","fast"],    sameSound: ["fault","vault"] },
+      { words: ["noodles","poodles","nods"], sameSound: ["noodles","poodles"] },
+      { words: ["marbles","barks","middles"], sameSound: ["marbles","barks"] },
+      { words: ["stalk","chalk","stack"],   sameSound: ["stalk","chalk"] }
     ]
   }
 };
